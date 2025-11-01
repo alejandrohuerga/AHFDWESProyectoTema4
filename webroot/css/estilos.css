@@ -1,0 +1,87 @@
+ /*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 31 oct 2025, 9:30:30
+    Author     : Alejandro De la Huerga
+*/
+
+*{
+    box-sizing: border-box;
+    margin: 0px;
+    
+}
+header,footer{
+    background: lightpink;
+}
+body{
+    background: grey;
+}
+
+header {
+  position: relative;        /* Nos permite posicionar elementos dentro */
+  display: flex;             /* Activamos Flexbox */
+  align-items: center;       /* Centramos verticalmente */
+  justify-content: center;   /* Centramos el contenido principal */
+  height: 120px;             /* Ajusta si tu header es más alto o bajo */
+}
+
+
+/* El título centrado */
+header h1 {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-size: 2.0rem;
+}
+
+.logo{
+    width: 40px;
+    height: auto;
+}
+
+table{
+    margin: 2rem auto;
+    border: 1px solid lightgrey;
+    width: 90%;
+    max-width: 1200px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#scripts th {
+    background-color: pink;
+    color: black;
+    padding: 12px;
+    text-align: center;
+    font-weight: bold;
+    white-space: nowrap; /* Los encabezados en una sola línea */
+}
+
+#scripts td{
+    background-color: lightgrey;
+    text-align: center;
+    /*padding: 10px;*/
+}
+
+#ejercicios th {
+    background-color: pink;
+    color: black;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    white-space: nowrap; /* Los encabezados en una sola línea */
+}
+
+#ejercicios td{
+    background-color: lightgrey;
+    /*text-align: center;*/
+}
+
+footer {
+  height: 90px;
+  background: #F291F2;
+  display: flex;                /* Activa Flexbox */
+  justify-content: center;      /* Centra los elementos horizontalmente */
+  align-items: center;          /* Centra verticalmente */
+  gap: 40px;                    /* Espacio entre los dos enlaces */
+}
