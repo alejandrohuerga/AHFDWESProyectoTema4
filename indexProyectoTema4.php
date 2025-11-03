@@ -32,54 +32,54 @@
                 <tr>
                     <th>SCRIPT CREACIÓN</th>
                     <td>
-                        <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
+                        <a href="mostrarcodigo/muestraScriptCreacionDB.php">
                             <img src="doc/images/eye.png" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
-                        <a href="mostrarCodigo/mostrarCreacionBDExplotacion.php" >
-                            <img src="doc/images/play.svg" class="logo" alt=""/>
+                        <a href="mostrarcodigo/mostrarCreacionBDExplotacion.php" >
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/eye.png" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                 </tr>
                 <tr>
                     <th>CARGA INICIAL</th>
                     <td>
-                        <a href="mostrarCodigo/mostrarCargaInicialBD.php">
+                        <a href="mostrarcodigo/muestraScriptCargaInicialDB.php">
                             <img src="doc/images/eye.png" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCargaInicialBD.php">
-                            <img src="doc/images/play.svg" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/eye.png" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                 </tr>
                 <tr>
                     <th>SCRIPT BORRADO</th>
                     <td>
-                        <a href="mostrarCodigo/mostrarBorradoBD.php" >
+                        <a href="mostrarcodigo/muestraScriptBorradoDB.php" >
                             <img src="doc/images/eye.png" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarBorradoBDExplotacion.php">
-                            <img src="doc/images/play.svg" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/eye.png" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                 </tr>
@@ -105,12 +105,12 @@
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/eye.png" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/play.svg" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                 </tr>
@@ -119,17 +119,17 @@
                     <td>Mostrar el contenido de la tabla Departamento y el número de registros.</td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/eye.png" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/eye.png" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/play.svg" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                 </tr>
@@ -139,17 +139,17 @@
                     control de errores.</td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/eye.png" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/eye.png" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/play.svg" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                 </tr>
@@ -159,17 +159,17 @@
                         DescDepartamento, si el usuario no pone nada deben aparecer todos los departamentos).</td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/eye.png" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/eye.png" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/play.svg" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                 </tr>
@@ -180,17 +180,17 @@
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/eye.png" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/eye.png" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/play.svg" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                 </tr>
@@ -201,17 +201,17 @@
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/eye.png" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/eye.png" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/play.svg" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                 </tr>
@@ -222,17 +222,17 @@
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/eye.png" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/eye.png" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/play.svg" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                 </tr>
@@ -243,17 +243,17 @@
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/eye.png" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/eye.png" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="doc/images/play.svg" class="logo" alt=""/>
+                            <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                 </tr>

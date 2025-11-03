@@ -19,6 +19,8 @@ body{
     background: grey;
 }
 
+
+
 header {
   position: relative;        /* Nos permite posicionar elementos dentro */
   display: flex;             /* Activamos Flexbox */
@@ -79,7 +81,7 @@ table{
 
 footer {
   height: 90px;
-  background: #F291F2;
+  background: pink;
   display: flex;                /* Activa Flexbox */
   justify-content: center;      /* Centra los elementos horizontalmente */
   align-items: center;          /* Centra verticalmente */
