@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="/Proyecto webs alumnos/media/logoSauces.png">
     <link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Double:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
     <title>Alejandro De la Huerga</title>
     <link rel="stylesheet" href="webroot/css/estilos.css"/>
@@ -90,7 +89,7 @@
                 <tr>
                     <th>NÚMERO</th>
                     <th>ENUNCIADO</th>
-                    <th>PDO</th>
+                    <th colspan="2">PDO</th>
                     <th colspan="2">MySQLi</th>
                 </tr>
             </thead>
@@ -99,8 +98,13 @@
                     <td>1</td>
                     <td>Conexión a la base de datos con la cuenta usuario y tratamiento de errores</td>
                     <td>
-                        <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
+                        <a href="mostrarcodigo/muestraEjercicio01.php" >
                             <img src="doc/images/eye.png" class="logo" alt=""/>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="codigoPHP/ejercicio01.php" >
+                            <img src="doc/images/play.svg" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
