@@ -1,0 +1,16 @@
+# Ignorar solo la carpeta privada de NetBeans
+nbproject/private/
+
+# Ignorar otros archivos innecesarios
+nbbuild/
+dist/
+build/
+nbsession.ser
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos temporales o logs
+*.log
+*.tmp
