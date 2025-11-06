@@ -24,7 +24,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
            atributos al instanciar el objeto PDO.
         */
         
-            const DSN = 'mysql:host=10.199.8.195; dbname=DBAHFDWESProyectoTema4';
+            const DSN = 'mysql:host=192.168.1.100; dbname=DBAHFDWESProyectoTema4';
             const USERNAME = 'userAHFDWESProyectoTema4';
             const PASSWORD = 'paso';
         

@@ -7,30 +7,35 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     Author     : Alejandro De la Huerga
 */
 
+
 *{
     box-sizing: border-box;
     margin: 0px;
     
 }
-header,footer{
-    background: lightpink;
-}
 body{
+    width: 100vh;
     background: grey;
 }
+
+header,footer{
+    
+    background: lightpink;
+}
+
 
 
 
 header {
-  position: relative;        /* Nos permite posicionar elementos dentro */
-  display: flex;             /* Activamos Flexbox */
-  align-items: center;       /* Centramos verticalmente */
-  justify-content: center;   /* Centramos el contenido principal */
-  height: 120px;             /* Ajusta si tu header es más alto o bajo */
+  position: relative;        
+  display: flex;             
+  align-items: center;       
+  justify-content: center;   
+  height: 120px;             
 }
 
 
-/* El título centrado */
+
 header h1 {
   margin: 0;
   font-family: "Playfair Display", serif;
@@ -44,10 +49,10 @@ header h1 {
 
 table{
     margin: 2rem auto;
-    /*border: 1px solid lightgrey;*/
     width: 90%;
     max-width: 1200px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    
 }
 
 #scripts th {
@@ -56,13 +61,13 @@ table{
     padding: 12px;
     text-align: center;
     font-weight: bold;
-    white-space: nowrap; /* Los encabezados en una sola línea */
+    white-space: nowrap; 
 }
 
 #scripts td{
     background-color: lightgrey;
     text-align: center;
-    /*padding: 10px;*/
+    
 }
 
 #ejercicios th {
@@ -71,19 +76,16 @@ table{
     padding: 12px;
     text-align: center;
     font-weight: bold;
-    white-space: nowrap; /* Los encabezados en una sola línea */
+    white-space: nowrap; 
 }
 
 #ejercicios td{
     background-color: lightgrey;
-    /*text-align: center;*/
+    
 }
 
 footer {
   height: 90px;
   background: pink;
-  display: flex;                /* Activa Flexbox */
-  justify-content: center;      /* Centra los elementos horizontalmente */
-  align-items: center;          /* Centra verticalmente */
-  gap: 40px;                    /* Espacio entre los dos enlaces */
+  display: flex;                
 }
