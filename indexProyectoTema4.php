@@ -136,11 +136,21 @@
                             <img src="" class="logo" alt=""/>
                         </a>
                     </td>
+                    <td>
+                        <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
+                            <img src="" class="logo" alt=""/>
+                        </a>
+                    </td>
                 </tr>
                 <tr>
                     <td>3</td>
                     <td>Formulario para añadir un departamento a la tabla Departamento con validación de entrada y
                     control de errores.</td>
+                    <td>
+                        <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
+                            <img src="" class="logo" alt=""/>
+                        </a>
+                    </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
                             <img src="" class="logo" alt=""/>
@@ -176,11 +186,21 @@
                             <img src="" class="logo" alt=""/>
                         </a>
                     </td>
+                    <td>
+                        <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
+                            <img src="" class="logo" alt=""/>
+                        </a>
+                    </td>
                 </tr>
                 <tr>
                     <td>5</td>
                     <td>Pagina web que añade tres registros a nuestra tabla Departamento utilizando tres instrucciones
                         insert y una transacción, de tal forma que se añadan los tres registros o no se añada ninguno.
+                    </td>
+                    <td>
+                        <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
+                            <img src="" class="logo" alt=""/>
+                        </a>
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
@@ -218,6 +238,11 @@
                             <img src="" class="logo" alt=""/>
                         </a>
                     </td>
+                    <td>
+                        <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
+                            <img src="" class="logo" alt=""/>
+                        </a>
+                    </td>
                 </tr>
                 <tr>
                     <td>7</td>
@@ -239,11 +264,21 @@
                             <img src="" class="logo" alt=""/>
                         </a>
                     </td>
+                    <td>
+                        <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
+                            <img src="" class="logo" alt=""/>
+                        </a>
+                    </td>
                 </tr>
                 <tr>
                     <td>8</td>
                     <td>Página web que toma datos (código y descripción) de la tabla Departamento y guarda en un
                         fichero departamento.xml. (COPIA DE SEGURIDAD / EXPORTAR).
+                    </td>
+                    <td>
+                        <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
+                            <img src="" class="logo" alt=""/>
+                        </a>
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >

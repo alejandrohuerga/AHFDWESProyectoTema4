@@ -24,7 +24,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
            atributos al instanciar el objeto PDO.
         */
         
-            const DSN = 'mysql:host=192.168.1.100; dbname=DBAHFDWESProyectoTema4';
+            const DSN = 'mysql:host=10.199.8.195; dbname=DBAHFDWESProyectoTema4';
             const USERNAME = 'userAHFDWESProyectoTema4';
             const PASSWORD = 'paso';
         
@@ -47,17 +47,52 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
         // Conexión a la base de datos con los datos correctos.
         
             echo '<h3>Conexión a la base de datos DBAHFDWESProyectoTema4 correctamente</h3>';
-            
+            try{
                 $miDB= new PDO(DSN,USERNAME,PASSWORD);
                 echo 'Conectado a la Base de Datos correctamente </br>';
-            try{
                 
+                echo '<p><b>Atributos de la conexión</b></p>';
+                
+                foreach($aAtributos as $atributo){
+                    echo "PDO::ATTR_$atributo";
+                    try{
+                        echo '<span class="azul">'.$miDB->getAttribute( constant( "PDO::ATTR_$atributo" ) ) . "</span><br>";
+                    } catch (PDOException $miExceptionPDO){
+                        echo '<span class="rojo"> <b>Error: </b>'.$miExceptionPDO->getMessage().' <b>con código de error:</b> '.$miExceptionPDO->getCode()."</span><br>";
+                    }
+                }
             } catch (PDOException $miExceptionPDO) {
                 echo 'Error: '.$miExceptionPDO->getMessage();
                 echo '<br>';
-                echo 'Código de error: '.$miExceptionPDO->getCode();
+                echo 'Código de error: '.$miExceptionPDO->getCode();  
+            } finally{ 
+                unset($miDB); 
             }
+        
+        // Conexión a la base de datos con los datos incorrectos.
             
+            echo '<h3>Conexión a la base de datos DBAHFDWESProyectoTema4 datos incorrectos</h3>';
+            try{
+                $miDB= new PDO(DSN,USERNAME,'error');
+                echo 'Conectado a la Base de Datos correctamente </br>';
+                
+                echo '<p><b>Atributos de la conexión</b></p>';
+                
+                foreach($aAtributos as $atributo){
+                    echo "PDO::ATTR_$atributo";
+                    try{
+                        echo '<span class="azul">'.$miDB->getAttribute( constant( "PDO::ATTR_$atributo" ) ) . "</span><br>";
+                    } catch (PDOException $miExceptionPDO){
+                        echo '<span class="rojo"> <b>Error: </b>'.$miExceptionPDO->getMessage().' <b>con código de error:</b> '.$miExceptionPDO->getCode()."</span><br>";
+                    }
+                }
+            } catch (PDOException $miExceptionPDO) {
+                echo 'Error: '.$miExceptionPDO->getMessage();
+                echo '<br>';
+                echo 'Código de error: '.$miExceptionPDO->getCode();  
+            } finally{ 
+                unset($miDB); 
+            }
         ?>
     </body>
 </html>
