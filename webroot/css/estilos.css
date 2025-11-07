@@ -14,7 +14,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     
 }
 body{
-    width: 100vh;
+    
     background: grey;
 }
 
@@ -87,5 +87,10 @@ table{
 footer {
   height: 90px;
   background: pink;
-  display: flex;                
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
+
+

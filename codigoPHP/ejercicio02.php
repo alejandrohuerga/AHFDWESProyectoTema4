@@ -22,20 +22,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
          * 2. Mostrar el contenido de la tabla Departamento y el número de registros.
         */
         
-            const DSN = 'mysql:host=192.168.1.100; dbname=DBAHFDWESProyectoTema4';
-            const USERNAME = 'userAHFDWESProyectoTema4';
-            const PASSWORD = 'paso';
+            $dsn= 'mysql:host='.$_SERVER['SERVER_ADDR'].';dbname=DBAHFDWESProyectoTema4';
+            $username = 'userAHFDWESProyectoTema4';
+            $password = 'paso';
             
             $numRegistros=0; // Variable para contar el numero de registros que devuelve la consulta.
-            
+            // Consulta no preparada.
+            $sqlDepartamentos='SELECT * FROM T02_Departamento';
             // Conexión a la base de datos con los datos correctos.
         
             echo '<h3>Contenido de la tabla T02_Departamento</h3>';
             try{
-                $miDB= new PDO(DSN,USERNAME,PASSWORD);
+                $miDB= new PDO(dsn,username,password);
                 
-                // Consulta no preparada.
-                $sqlDepartamentos='SELECT * FROM T02_Departamento';
                 
                 // Utilizamos query para consultas de SELECT.
                 $resultadoDepartamentos=$miDB->query($sqlDepartamentos);
