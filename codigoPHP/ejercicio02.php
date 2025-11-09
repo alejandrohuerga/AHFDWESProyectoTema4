@@ -21,10 +21,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
          * @since: 06/11/2025
          * 2. Mostrar el contenido de la tabla Departamento y el número de registros.
         */
+            // Importación de la libreria de validación de formularios.
         
-            $dsn= 'mysql:host='.$_SERVER['SERVER_ADDR'].';dbname=DBAHFDWESProyectoTema4';
-            $username = 'userAHFDWESProyectoTema4';
-            $password = 'paso';
+            require_once '../core/231018libreriaValidacion.php';
+            
+            // Atributos para el establecimiento de conexión con la base de datos.
+            // Utilizamos la variable super global $_SERVER para obtener la ip.
+            
+            $dsn= 'mysql:host='.$_SERVER['SERVER_ADDR'].';dbname=DBAHFDWESProyectoTema4';  // Nombre de la base de datos
+            $username = 'userAHFDWESProyectoTema4'; // Nombre de usuario de la base de datos
+            $password = 'paso'; // password de la base de datos.
             
             $numRegistros=0; // Variable para contar el numero de registros que devuelve la consulta.
             // Consulta no preparada.
@@ -32,8 +38,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
             // Conexión a la base de datos con los datos correctos.
         
             echo '<h3>Contenido de la tabla T02_Departamento</h3>';
+            
             try{
-                $miDB= new PDO(dsn,username,password);
+                $miDB= new PDO($dsn,$username,$password); // Establecimiento de conexion mediante la instancia un objeto PDO
                 
                 
                 // Utilizamos query para consultas de SELECT.

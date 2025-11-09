@@ -7,11 +7,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
     <head>
         <meta charset="UTF-8">
         <title>Ejercicio 03 - Alejandro de la Huerga</title>
+        <link rel="stylesheet" href="../webroot/css/estilosEjercicio03.css"/>
+        
     </head>
     <body>
     <main>
-            
-
+        <header>
+            <h1>TEMA 4 : TÉCNICAS DE ACCESO PHP</h1>
+            <h2>EJERCICIO 3</h2>
+        </header>
             <?php
             /**
              * @author Véronique Grué
@@ -22,137 +26,182 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
              * Ejercicio 3
              * *Formulario para añadir un departamento a la tabla Departamento con validación de entrada y control de errores.
              */
-            //enlace para importar las librerías de validación de campos
-            require_once '../core/libreriaValidacion.php';
+            
+                //enlace para importar las librerías de validación de campos
+                
+                require_once '../core/231018libreriaValidacion.php';
 
-            ///inicialización de variables
-            /** @var array $aErrores Array para almacenar mensajes de error de validación. */
-            $aErrores = [
-                'T02_CodDepartamento' => '',
-                // 'T02_FechaCreacionDepartamento' => new DateTime(),
-                // 'T02_FechaBajaDepartamento' => new DateTime(),
-                'T02_DescDepartamento' => '',
-                'T02_VolumenDeNegocio' => ''
-            ];
-            /** @var array $aRespuestas Array para almacenar las repuestas. */
-            $aRespuestas = [
-                'T02_CodDepartamento' => '',
-                //'T02_FechaCreacionDepartamento' => new DateTime(),
-                // 'T02_FechaBajaDepartamento' => new DateTime(),
-                'T02_DescDepartamento' => '',
-                'T02_VolumenDeNegocio' => ''
-            ];
-
-            /** @boollean boolean $entradaOK Indica si los datos de entrada son correctos o no. */
-            $entradaOK = true;
-
-            //Para cada campo del formulario se valida la entrada y se actua en consecuencia
-            if (isset($_REQUEST['enviar'])) {//se cumple si el boton es submit
-                //Validación de los datos de los campos del formulario
-                $aErrores['T02_CodDepartamento'] = validacionFormularios::comprobarAlfabetico($_REQUEST['T02_CodDepartamento'], 3, 3, 1);
-                //$aErrores['T02_FechaCreacionDepartamento'] = validacionFormularios::validarFecha($_REQUEST['T02_FechaCreacionDepartamento'], $fechaMaxima, $fechaMinima, 1);
-                //$aErrores['T02_FechaBajaDepartamento'] = validacionFormularios::validarFecha($_REQUEST['T02_FechaBajaDepartamento'], $fechaMaxima, $fechaMinima, 1);
-                $aErrores['T02_DescDepartamento'] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['T02_DescDepartamento'], 255, 5, 1);
-                $aErrores['T02_VolumenDeNegocio'] = validacionFormularios::comprobarFloat($_REQUEST['T02_VolumenDeNegocio']);
-
-                //recorre el array de errores para detectar si hay alguno
-                foreach ($aErrores as $campo => $valorCampo) {
-                    if ($valorCampo != null) {//Si encuentra algún error 
-                        $entradaOK = false; // la entrada no es correcta
-                    }
+                // Atributos para el establecimiento de conexión con la base de datos.
+                // Utilizamos la variable super global $_SERVER para obtener la ip.
+            
+                $dsn= 'mysql:host='.$_SERVER['SERVER_ADDR'].';dbname=DBAHFDWESProyectoTema4';  // Nombre de la base de datos
+                $username = 'userAHFDWESProyectoTema4'; // Nombre de usuario de la base de datos
+                $password = 'paso'; // password de la base de datos.
+                
+                
+            // Array que almacena los errores
+            
+                $aErrores=[
+                    'T02_CodDepartamento' =>'',
+                    'T02_DescDepartamento' =>'',
+                    'T02_VolumenDeNegocio'=>'',
+                    
+                ];
+            
+            // Array que almacena las respuestas , inicializadas a null
+            
+                $aRespuestas=[
+                    'T02_CodDepartamento' =>null,
+                    'T02_DescDepartamento' =>null,
+                    'T02_VolumenDeNegocio'=>null,   
+                ];
+                
+                define('OBLIGATORIO',1); // Constante booleana que define que un campo es obligatorio.
+                $entradaOK=true; //Variable booleana que valida que la entrada esta bien , inicializada a true.
+                
+                
+                if(isset($_REQUEST['enviar'])){ // código que se ejecuta cuando se envia el formulario.
+                    
+                    $aErrores['T02_CodDepartamento']= validacionFormularios::comprobarAlfabetico($_REQUEST['T02_CodDepartamento'], 3, 3, OBLIGATORIO);
+                    $aErrores['T02_DescDepartamento']= validacionFormularios::comprobarAlfabetico($_REQUEST['T02_DescDepartamento'], 255, 1, OBLIGATORIO);
+                    $aErrores['T02_VolumenDeNegocio']= validacionFormularios::comprobarFloat($_REQUEST['T02_VolumenDeNegocio'], PHP_FLOAT_MAX, 0, OBLIGATORIO);
+                    
+                    
+                // Si en el array de errores encuentra un error la variable entradaOK pasa a un valor false.
+                
+                    foreach ($aErrores as $campo => $valor) {
+                        if($valor!=null){ // Si ha habido algun error $entradaOK es falso.
+                            $entradaOK=false;
+                        }else{
+                            $aRespuestas[$campo]=$_REQUEST[$campo]; // Guardamos el dato correcto en el array de Respuestas.
+                        }
+                    }   
+                    
+                }else{
+                    $entradaOK=false; // Si el formulario no se ha rellenado nunca.
                 }
-            } else {
-                //Si no se ha aceptado el formulario
-                $entradaOK = false;
-            }
-            //Tratamiento del formulario
-            if ($entradaOK) {
-                //REllenamos el array de respuesta con los valores que ha introducido el usuario
-                $aRespuestas['T02_CodDepartamento'] = trim($_REQUEST['T02_CodDepartamento']);
-                // $aRespuestas['T02_FechaCreacionDepartamento'] = $_REQUEST['T02_FechaCreacionDepartamento'];
-                // $aRespuestas['T02_FechaBajaDepartamento'] = $_REQUEST['T02_FechaBajaDepartamento'];
-                $aRespuestas['T02_DescDepartamento'] = trim($_REQUEST['T02_DescDepartamento']);
-                $aRespuestas['T02_VolumenDeNegocio'] = trim($_REQUEST['T02_VolumenDeNegocio']);
-
-                try {
-                    // Configuracion conexión PDO
-                    $dsn = 'mysql:host=' . $_SERVER['SERVER_ADDR'] . ';dbname=DBVGDWESProyectoTema4';
-                    $usuarioDb = 'userVGDWESProyectoTema4';
-                    $pswd = 'paso';
-
-                    $miDB = new PDO($dsn, $usuarioDb, $pswd);
-                    $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    // Preparación de la consulta con query
-                    $sql = "INSERT INTO T_02Departamento 
-                            (T02_CodDepartamento, T02_DescDepartamento, T02_VolumenDeNegocio)
-                           VALUES (
-                             '{$aRespuestas['T02_CodDepartamento']}',
-                             '{$aRespuestas['T02_DescDepartamento']}',
-                             '{$aRespuestas['T02_VolumenDeNegocio']}'
-                        )";
-                    $miDB->query($sql);
-//                        // Preparación de la consulta con parámetros
-//                        $sql = "INSERT INTO T_02Departamento 
-//                            (T02_CodDepartamento, T02_DescDepartamento, T02_VolumenDeNegocio)
-//                            VALUES (:codDpto,:descDpto, :volDpto)";
-//
-//                        $consulta = $miDB->prepare($sql);
-                    // Asignar valores a los parámetros
-//                    $consulta->bindParam(':codDpto', $aRespuestas['T02_CodDepartamento']);
-//                    $consulta->bindParam(':descDpto', $aRespuestas['T02_DescDepartamento']);
-//                    $consulta->bindParam(':volDpto', $aRespuestas['T02_VolumenDeNegocio']);
-
-                    //var_dump($aRespuestas);
-                    // Ejecutar la consulta
-                    //$consulta->execute();
-
-                    echo "<p style='color:green; font-weight:bold;'>Departamento insertado correctamente.</p><br>";
-                } catch (PDOException $miExceptionPDO) {
-                    echo '<p style="color:purple; font-weight:bold;">Error en la base de datos: '
-                    . $miExceptionPDO->getMessage() . '<br>Código: '
-                    . $miExceptionPDO->getCode() . '</p>';
-                } finally {
-                    unset($miDB);
-                }
-                //Se recorre el array de las respuestas y se muestran
-
-                foreach ($aRespuestas as $campo => $valorCampo) {
-                    echo("$campo del usuario : " . $valorCampo . '</br>');
-                }
-               echo' <br><br><a href="ejercicio02.php" style="font-size: 25px; font-weight: 700;">Ver la tabla departamento </a>';
-            } else {
-                //si hay algún error se vuelve a mostrar el formulario
-                ?>
-                <section>
-                    <h2>Inserta un nuevo departamento.</h2>
-                    <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
-                        <label for="T02_CodDepartamento">Código :</label>
-                        <a style='color:red'><?php echo $aErrores['T02_CodDepartamento'] ?></a>
-                        <input name="T02_CodDepartamento" id="T02_CodDepartamento" type="text" value='<?php echo(empty($aErrores['T02_CodDepartamento'])) ? ($_REQUEST['T02_CodDepartamento'] ?? '') : ''; ?>'><br>
-
-                        <label for="T02_FechaCreacionDepartamento">Fecha Creación :</label>
-                        <input name="T02_FechaCreacionDepartamento" id="T02_FechaCreacionDepartamento" type="date" value="<?php echo date('Y-m-d'); ?>" disabled><br>
-
-                        <label for="T02_FechaBajaDepartamento">Fecha Baja :</label> 
-                        <input name="T02_FechaBajaDepartamento" id="T02_FechaBajaDepartamento" type="date" value="" disabled><br>
-
-                        <label for="T02_DescDepartamento">Descripción:</label>
-                        <a style='color:red'><?php echo $aErrores['T02_DescDepartamento'] ?></a>
-                        <input name="T02_DescDepartamento" id="T02_DescDepartamento" type="text" value='<?php echo(empty($aErrores['T02_DescDepartamento'])) ? ($_REQUEST['T02_DescDepartamento'] ?? '') : ''; ?> '><br>
-
-                        <label for="T02_VolumenDeNegocio">Volumen de negocio:</label>
-                        <a style='color:red'><?php echo $aErrores['T02_VolumenDeNegocio'] ?></a>
-                        <input name="T02_VolumenDeNegocio" id="T02_VolumenDeNegocio" type="text" value='<?php echo(empty($aErrores['T02_VolumenDeNegocio'])) ? ($_REQUEST['T02_VolumenDeNegocio'] ?? '') : ''; ?> '><br>
-
-                        <button type="submit" name="enviar" id="enviar">Enviar</button>
-                        <a class="cancelar" href="../indexProyectoTema4.php">Cancelar</a>
+                
+            // Tratamiento del formulario.
+            
+                if($entradaOK){
+                    $aRespuestas['T02_CodDepartamento']=$_REQUEST['T02_CodDepartamento'];
+                    $aRespuestas['T02_DescDepartamento']=$_REQUEST['T02_DescDepartamento'];
+                    $aRespuestas['T02_VolumenDeNegocio']=$_REQUEST['T02_VolumenDeNegocio'];
+                    
+                    try{
                         
+                    // Establecimiento de conexion mediante la instancia un objeto PDO
+                        $miDB= new PDO($dsn,$username,$password);
+                        
+                    // Preparacon de la consulta con query.
+                        
+                        $sql=<<<EOT
+                            INSERT INTO T02_Departamento (T02_CodDepartamento,T02_DescDepartamento,
+                            T02_FechaCreacionDepartamento,T02_VolumenDeNegocio) 
+                            VALUES (
+                                '{$aRespuestas['T02_CodDepartamento']}',
+                                '{$aRespuestas['T02_DescDepartamento']}',
+                                 NOW(),
+                                '{$aRespuestas['T02_VolumenDeNegocio']}'
+                            );   
+                        EOT;
+                                
+                        $miDB->query($sql);
+                        
+                        echo "<p style='color:green; font-weight:bold;'>DEPARTAMENTO INSERTADO CORRECTAMENTE</p>";
+                        
+                    } catch (PDOException $miExceptionPDO) {
+                        echo 'Error: '.$miExceptionPDO->getMessage();
+                        echo '<br>';
+                        echo 'Código de error: '.$miExceptionPDO->getCode();  
+                    } finally{ 
+                        unset($miDB); 
+                    }
+                    
+                    //Se recorre el array de las respuestas y se muestran
 
-                    </form>  
-                    <?php
+                    foreach ($aRespuestas as $campo => $valorCampo) {
+                        echo("$campo del usuario : " . $valorCampo . '</br>');
+                    }
+                }else{ 
+                // Si no se ha ingresado correctamente volvemos a mostrar el formulario.
+                ?>
+                <section class="formulario">
+                    <h2>Inserta un nuevo departamento</h2>
+                    <form name="formulario" action=<?php echo $_SERVER["PHP_SELF"]; ?> method="post">
+                        
+                            <label for="T02_CodDepartamento">T02_CodDepartamento:
+                                <input style="background-color:lightgoldenrodyellow;" type="text" name="T02_CodDepartamento"  
+                                        value='<?php echo (empty($aErrores['T02_CodDepartamento'])) ? ($_REQUEST['T02_CodDepartamento'] ?? '') : ''; ?>'/>
+                                <a style=color:red;> <?php echo $aErrores['T02_CodDepartamento'] ?>  </a>
+                            </label>
+                            <br/>
+                            <label for="T02_DescDepartamento">T02_DescDepartamento:
+                                <input style="background-color:lightgoldenrodyellow;" type="text" name="T02_DescDepartamento"  
+                                        value='<?php echo (empty($aErrores['T02_DescDepartamento'])) ? ($_REQUEST['T02_DescDepartamento'] ?? '') : ''; ?>'/>
+                                <a style=color:red;> <?php echo $aErrores['T02_DescDepartamento'] ?>  </a>
+                            </label>
+                            <br/>
+                            <label for="T02_FechaCreacionDepartamento">T02_FechaCreacionDepartamento:
+                                <input style="background-color:lightgrey;" name="T02_FechaCreacionDepartamento" id="T02_FechaCreacionDepartamento" 
+                                       type="date" value="<?php echo date('Y-m-d'); ?>" disabled>
+                            </label>
+                            <br/>
+                            <label for="T02_VolumenDeNegocio">T02_VolumenDeNegocio:
+                                <input style="background-color:lightgoldenrodyellow;" type="text" name="T02_VolumenDeNegocio"  
+                                       value='<?php echo (empty($aErrores['T02_VolumenDeNegocio'])) ? ($_REQUEST['T02_VolumenDeNegocio'] ?? '') : ''; ?>'/>
+                                <a style=color:red;> <?php echo $aErrores['T02_VolumenDeNegocio'] ?></a>
+                            </label>
+                            <br/>
+                            <div class="botones">
+                                <input type="submit" name="enviar" value="enviar">
+                                <a class="cancelar" href="../indexProyectoTema4.php">Cancelar</a>
+                            </div>
+                    </form>
+                <?php        
                 }
                 ?>
-            </section>
+                </section>
+                <section class="contenedorTabla">
+                    <?php
+                    
+                        // Establecimiento de conexion mediante la instancia un objeto PDO
+                        $miDB= new PDO($dsn,$username,$password);
+                        
+                        // Consulta no preparada.
+                        $sqlDepartamentos='SELECT * FROM T02_Departamento';
+                        $resultadoDepartamentos=$miDB->query($sqlDepartamentos);
+                        
+                        // Tabla para mostrar los registros de la tabla departamentos.
+                        echo '<table>';
+                        echo '<tr>';
+                        echo '<th>T02_CodDepartamento</th>';
+                        echo '<th>T02_DescDepartamento</th>';
+                        echo '<th>T02_FechaCreacionDepartamento</th>';
+                        echo '<th>T02_VolumenDeNegocio</th>';
+                        echo '<th>T02_FechaBajaDepartamento</th>';
+                        echo '</tr>';
+
+                        while($registro = $resultadoDepartamentos->fetch(PDO::FETCH_ASSOC)){
+                            echo '<tr>';
+                            echo '<td>'.$registro['T02_CodDepartamento'].'</td>';
+                            echo '<td>'.$registro['T02_DescDepartamento'].'</td>';
+                            echo '<td>'.$registro['T02_FechaCreacionDepartamento'].'</td>';
+                            echo '<td>'.$registro['T02_VolumenDeNegocio'].'</td>';
+                            echo '<td>'.$registro['T02_FechaBajaDepartamento'].'</td>';
+                            echo '</tr>';
+                        }
+                        echo '</table>';
+                    ?>
+                </section>
         </main>
     </body>
+    <footer>
+        <a href="/AHFDWESProyectoTema4/indexProyectoTema4.php">
+            <p>Alejandro De la Huerga</p>
+        </a>
+        <a href="https://github.com/alejandrohuerga/AHFDWESProyectoTema4.git">
+            <img src="../doc/images/github-logo.png" class="logo" alt=""/>
+        </a>
+    </footer>
 </html>
