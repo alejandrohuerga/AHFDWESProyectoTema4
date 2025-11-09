@@ -8,7 +8,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
         <meta charset="UTF-8">
         <title>Ejercicio 03 - Alejandro de la Huerga</title>
         <link rel="stylesheet" href="../webroot/css/estilosEjercicio03.css"/>
-        
     </head>
     <body>
     <main>
@@ -18,7 +17,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
         </header>
             <?php
             /**
-             * @author Véronique Grué
+             * @author Alejandro De la Huerga Fernández
              * @version 1.0
              * @date 2025-11-05 
              * 
@@ -129,7 +128,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 <section class="formulario">
                     <h2>Inserta un nuevo departamento</h2>
                     <form name="formulario" action=<?php echo $_SERVER["PHP_SELF"]; ?> method="post">
-                        
                             <label for="T02_CodDepartamento">T02_CodDepartamento:
                                 <input style="background-color:lightgoldenrodyellow;" type="text" name="T02_CodDepartamento"  
                                         value='<?php echo (empty($aErrores['T02_CodDepartamento'])) ? ($_REQUEST['T02_CodDepartamento'] ?? '') : ''; ?>'/>

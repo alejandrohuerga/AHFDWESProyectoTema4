@@ -42,6 +42,7 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    height: 70vh;
 }
 
 h3{
@@ -60,6 +61,9 @@ h3{
     max-width:760px;
     margin:20px auto;
     box-shadow:0 6px 20px rgba(0,0,0,0.06);
+}
+.formulario h2{
+    margin-bottom: 15px;
 }
 
 /* FORMULARIO: label e input en línea */
