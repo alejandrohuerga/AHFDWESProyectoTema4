@@ -12,6 +12,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
             .formulario h2{
                 margin-bottom: 20px;
             }
+            
+            .formulario{
+                height: 200px;
+                
+            }
+            
         </style>
     </head>
     <body>
@@ -24,7 +30,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
             /**
              * @author Alejandro De la Huerga Fernández
              * @version 1.0
-             * @date 2025-11-05 
+             * @date 2025-11-10 
              * 
              *
              * 4. Formulario de búsqueda de departamentos por descripción (por una parte del campo
@@ -34,7 +40,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 //enlace para importar las librerías de validación de campos
                 
                 require_once '../core/231018libreriaValidacion.php';
-
+                
+                $numRegistros=0; // Variable para contar el numero de registros que devuelve la consulta.
+                
                 // Atributos para el establecimiento de conexión con la base de datos.
                 // Utilizamos la variable super global $_SERVER para obtener la ip.
             
@@ -45,7 +53,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                  // Array que almacena los errores
                 
                 $aErrores=[
-                  'T02_DescDepartamento'=>''  
+                  'DescDepartamentoBuscar'=>''  
                 ];
                 
                 // Array que almacena las respuestas , inicializadas a null
@@ -59,7 +67,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                         
                 if(isset($_REQUEST['enviar'])){ // código que se ejecuta cuando se envia el formulario.
                       
-                    $aErrores['T02_DescDepartamento']= validacionFormularios::comprobarAlfabetico($_REQUEST['T02_DescDepartamento'], 255, 1, OBLIGATORIO);
+                    $aErrores['DescDepartamentoBuscar']= validacionFormularios::comprobarAlfabetico($_REQUEST['T02_DescDepartamento'], 255, 1, OBLIGATORIO);
                     
                 // Si en el array de errores encuentra un error la variable entradaOK pasa a un valor false.
                 
@@ -67,7 +75,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                         if($valor!=null){ // Si ha habido algun error $entradaOK es falso.
                             $entradaOK=false;
                         }else{
-                            $aRespuestas[$campo]=$_REQUEST[$campo]; // Guardamos el dato correcto en el array de Respuestas.
+                            $aRespuestas[0]=$_REQUEST['T02_DescDepartamento']; // Guardamos el dato correcto en el array de Respuestas.
                         }
                     }   
                     
@@ -80,6 +88,26 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 if($entradaOK){
                     
                     $aRespuestas['T02_DescDepartamento']=$_REQUEST['T02_DescDepartamento'];      
+                    
+                }
+                // Si no se ha ingresado correctamente volvemos a mostrar el formulario.
+                ?>
+            <section class="formulario">
+                    <h2>Busca un departamento</h2>
+                    <form name="formulario" action=<?php echo $_SERVER["PHP_SELF"]; ?> method="post">
+                            <label for="T02_DescDepartamento">
+                                <input type="text" name="T02_DescDepartamento"  
+                                        value='<?php echo (empty($aErrores['DescDepartamentoBuscar'])) ? ($_REQUEST['T02_DescDepartamento'] ?? '') : ''; ?>'/>
+                                <a style=color:red;> <?php echo $aErrores['DescDepartamentoBuscar'] ?>  </a>
+                            </label>
+                            <br/>
+                            <div class="botones">
+                                <input type="submit" name="enviar" value="Buscar">
+
+                            </div>
+                    </form>
+            </section>
+                <?php 
                     try{
                         
                     // Establecimiento de conexion mediante la instancia un objeto PDO
@@ -101,16 +129,18 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                         echo '<th>T02_FechaBajaDepartamento</th>';
                         echo '</tr>';
                         
-                        while($registro = $resultadoBusqueda->fetch(PDO::FETCH_ASSOC)){
+                        while($registro = $resultadoBusqueda->fetchObject()){
+                            $numRegistros++;
                             echo '<tr>';
-                            echo '<td>'.$registro['T02_CodDepartamento'].'</td>';
-                            echo '<td>'.$registro['T02_DescDepartamento'].'</td>';
-                            echo '<td>'.$registro['T02_FechaCreacionDepartamento'].'</td>';
-                            echo '<td>'.$registro['T02_VolumenDeNegocio'].'</td>';
-                            echo '<td>'.$registro['T02_FechaBajaDepartamento'].'</td>';
+                            echo '<td>'.$registro->T02_CodDepartamento.'</td>';
+                            echo '<td>'.$registro->T02_DescDepartamento.'</td>';
+                            echo '<td>'.$registro->T02_FechaCreacionDepartamento.'</td>';
+                            echo '<td>'.$registro->T02_VolumenDeNegocio.'</td>';
+                            echo '<td>'.$registro->T02_FechaBajaDepartamento.'</td>';
                             echo '</tr>';
                         }
                         
+                        echo '<h3>Numero de registros: '.$numRegistros.'</h3>';
                         
                     } catch (PDOException $miExceptionPDO) {
                         echo 'Error: '.$miExceptionPDO->getMessage();
@@ -119,31 +149,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                     } finally{ 
                         unset($miDB); 
                     }
-                    
-                    echo '<h3>Resultados de tu búsqueda</h3>';
-                    
-                }else{ 
-                // Si no se ha ingresado correctamente volvemos a mostrar el formulario.
                 ?>
-            <section class="formulario">
-                    <h2>Busca un departamento</h2>
-                    <form name="formulario" action=<?php echo $_SERVER["PHP_SELF"]; ?> method="post">
-                            <label for="T02_DescDepartamento">
-                                <input type="text" name="T02_DescDepartamento"  
-                                        value='<?php echo (empty($aErrores['T02_DescDepartamento'])) ? ($_REQUEST['T02_DescDepartamento'] ?? '') : ''; ?>'/>
-                                <a style=color:red;> <?php echo $aErrores['T02_DescDepartamento'] ?>  </a>
-                            </label>
-                            <br/>
-                            <div class="botones">
-                                <input type="submit" name="enviar" value="enviar">
-                                <a class="cancelar" href="../indexProyectoTema4.php">Cancelar</a>
-                            </div>
-                    </form>
-                <?php        
-                }
-                ?>
-            </section>
         </main>
     </body>
-    
 </html>

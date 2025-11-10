@@ -14,11 +14,13 @@
  * 
  * Clase de validacion de formularios que contiene las funciones necesarias para validar los campos de un formulario.
  * 
+ * @author Version 1.7 Jesús Temprano Gallego
  * @author Version 1.6 Javier Nieto y Cristina Nuñez
  * @author Versión 1.3 Adrián Cando Oviedo
  * @category Validacion
  * @package  Validacion
  * @source ClaseValidacion.php
+ * @since 1.7 07/11/2025 Corregido error que hacia que comprobarAlfabetico() y comprobarAlfaNumerico() devolvieran un string cuando deveria devolver null al ser corrtas.
  * @since 1.6 30/11/2020 Mejoras en las funciones comprobarEnter(), comprobarFloat(), validarPassword()
  * @since 1.5 mejorada la ortografía de los mensajes de error
  * se escribian cada vez que querías mostrarlos ahora ya los devuelve cada función a la que se ha llamado sin tener que escribir nada.
@@ -29,7 +31,7 @@
  * @since 1.2 Se han acabado de formatear los mensajes de error, se han modificado validarURL() y se han añadido validarCp(), validarPassword(), validarRadioB() y validarCheckBox()
  * @since 1.1 Se han formateado los mensajes de error y modificado validarDni()
  * @copyright 2018-2020 DAW2
- * @version 1.6
+ * @version 1.7
  * 
  * 
  */
@@ -42,6 +44,8 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
      * Funcion que compueba si el parametro recibido esta compuesto por caracteres alfabeticos
      * 
      * @author Adrián Cando Oviedo
+     * @author Jesús Temprano Gallego
+     * @version 1.1 2025-11-07 Corregido error que hacia que devolviera un string cuando deveria devolver null.
      * @version 1.0 He eliminado todos los if innecesrios que había simplificandolo a llamar a las funciones internas de errores que devuelven un error si le hay
      * concatenando esos errores en una cadena. Y comprobando que está vacío siempre que sea obligatorio. He añadido algunos comentarios explicando los nuevos cambios.
      * @since 2018-10-23
@@ -67,8 +71,13 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
         if (!preg_match($patron_texto, $cadena) && !empty($cadena)) {
             $mensajeError = " Solo se admiten letras.";
         }
-        $mensajeError .= self::comprobarMaxTamanio($cadena, $maxTamanio);
-        $mensajeError .= self::comprobarMinTamanio($cadena, $minTamanio);
+        // Concatena el error solo si la comprobacion de tamaño devuelve uno
+        if ($error = self::comprobarMaxTamanio($cadena, $maxTamanio)) {
+            $mensajeError .= $error;
+        }
+        if ($error = self::comprobarMinTamanio($cadena, $minTamanio)) {
+            $mensajeError .= $error;
+        }
         return $mensajeError;
     }
 
@@ -82,6 +91,8 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
      * Funcion que compueba si el parametro recibido esta compuesto por caracteres alfabeticos y numericos conjuntamente.
      *         
      * @author Adrián Cando Oviedo
+     * @author Jesús Temprano Gallego
+     * @version 1.1 2025-11-07 Corregido error que hacia que devolviera un string cuando deveria devolver null.
      * @version 1.0 He eliminado todos los if innecesrios que había simplificandolo a llamar a las funciones internas de errores que devuelven un error si le hay
      * concatenando esos errores en una cadena. Y comprobando que está vacío siempre que sea obligatorio. He añadido algunos comentarios explicando los nuevos cambios.
      * @since 2018-10-23
@@ -98,8 +109,13 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
         if ($obligatorio == 1 && $cadena != '0') {
             $mensajeError = self::comprobarNoVacio($cadena);
         }
-        $mensajeError .= self::comprobarMaxTamanio($cadena, $maxTamanio);
-        $mensajeError .= self::comprobarMinTamanio($cadena, $minTamanio);
+        // Concatena el error solo si la comprobacion de tamaño devuelve uno
+        if ($error = self::comprobarMaxTamanio($cadena, $maxTamanio)) {
+            $mensajeError .= $error;
+        }
+        if ($error = self::comprobarMinTamanio($cadena, $minTamanio)) {
+            $mensajeError .= $error;
+        }
         return $mensajeError;
     }
 

@@ -43,8 +43,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 $aErrores=[
                     'T02_CodDepartamento' =>'',
                     'T02_DescDepartamento' =>'',
-                    'T02_VolumenDeNegocio'=>'',
-                    
+                    'T02_VolumenDeNegocio'=>'',  
                 ];
             
             // Array que almacena las respuestas , inicializadas a null
@@ -129,7 +128,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                     <h2>Inserta un nuevo departamento</h2>
                     <form name="formulario" action=<?php echo $_SERVER["PHP_SELF"]; ?> method="post">
                             <label for="T02_CodDepartamento">T02_CodDepartamento:
-                                <input style="background-color:lightgoldenrodyellow;" type="text" name="T02_CodDepartamento"  
+                                <input style="background-color:lightgoldenrodyellow; text-transform: uppercase;" type="text" name="T02_CodDepartamento"  
                                         value='<?php echo (empty($aErrores['T02_CodDepartamento'])) ? ($_REQUEST['T02_CodDepartamento'] ?? '') : ''; ?>'/>
                                 <a style=color:red;> <?php echo $aErrores['T02_CodDepartamento'] ?>  </a>
                             </label>
@@ -185,7 +184,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                             echo '<td>'.$registro['T02_CodDepartamento'].'</td>';
                             echo '<td>'.$registro['T02_DescDepartamento'].'</td>';
                             echo '<td>'.$registro['T02_FechaCreacionDepartamento'].'</td>';
-                            echo '<td>'.$registro['T02_VolumenDeNegocio'].'</td>';
+                            echo '<td>'.number_format($registro['T02_VolumenDeNegocio'], 2, ",", ".").'</td>';
                             echo '<td>'.$registro['T02_FechaBajaDepartamento'].'</td>';
                             echo '</tr>';
                         }
