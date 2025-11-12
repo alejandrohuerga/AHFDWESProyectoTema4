@@ -7,6 +7,45 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
     <head>
         <meta charset="UTF-8">
         <title>Ejercicio 5 - Alejandro De la Huerga</title>
+        <style>
+            *{
+                box-sizing: border-box;
+                margin: 0;
+            }
+            
+            header{
+                width: 100%;
+                height: 140px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                background-color: lightblue;
+            }
+            
+            main{
+                height: 72vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.2rem;
+            }
+            
+            footer{
+                width: 100%;
+                height: 130px;
+                background: lightblue;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 30px;
+            }
+            
+            footer img{
+                width: 50px;
+                height: auto;
+            }
+        </style>
     </head>
     <body>
         <header>
@@ -18,7 +57,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
             /**
              * @author Alejandro De la Huerga Fernández
              * @version 1.0
-             * @date 2025-11-10 
+             * @date 2025-11-12 
              * 
              *
              * 5. Pagina web que añade tres registros a nuestra tabla Departamento utilizando tres instrucciones
@@ -77,4 +116,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
             ?>
         </main>
     </body>
+    <footer>
+        <a href="../indexProyectoTema3.php">Alejandro De la Huerga Fernández</a>
+        <a href="https://github.com/alejandrohuerga/AHFDWESProyectoTema4.git">
+            <img src="../doc/images/github-logo.png"> 
+        </a>
+    </footer>
 </html>
