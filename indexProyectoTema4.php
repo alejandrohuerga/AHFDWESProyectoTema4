@@ -198,13 +198,13 @@
                         insert y una transacción, de tal forma que se añadan los tres registros o no se añada ninguno.
                     </td>
                     <td>
-                        <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="" class="logo" alt=""/>
+                        <a href="mostrarcodigo/muestraEjercicio05.php" >
+                            <img src="doc/images/eye.png" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
-                        <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
-                            <img src="" class="logo" alt=""/>
+                        <a href="codigoPHP/ejercicio05.php" >
+                            <img src="doc/images/play.svg" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>

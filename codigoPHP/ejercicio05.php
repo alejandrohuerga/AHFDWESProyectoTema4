@@ -14,7 +14,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
             <h2>EJERCICIO 5</h2>
         </header>
         <main>
-        <?php
+            <?php
             /**
              * @author Alejandro De la Huerga Fernández
              * @version 1.0
@@ -22,11 +22,59 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
              * 
              *
              * 5. Pagina web que añade tres registros a nuestra tabla Departamento utilizando tres instrucciones
-                insert y una transacción, de tal forma que se añadan los tres registros o no se añada ninguno.
-            */
-        
-            
-        ?>
+              insert y una transacción, de tal forma que se añadan los tres registros o no se añada ninguno.
+             */
+            $numRegistros = 0; // Variable para contar el numero de registros que devuelve la consulta.
+            // Atributos para el establecimiento de conexión con la base de datos.
+            // Utilizamos la variable super global $_SERVER para obtener la ip.
+
+            $dsn = 'mysql:host=' . $_SERVER['SERVER_ADDR'] . ';dbname=DBAHFDWESProyectoTema4';  // Nombre de la base de datos
+            $username = 'userAHFDWESProyectoTema4'; // Nombre de usuario de la base de datos
+            $password = 'paso'; // password de la base de datos.
+
+            try {
+                $ejecucionCorrecta = true;
+                //hacemos la conexion
+                $miDB = new PDO($dsn, $username, $password);
+                //desactivamos el modo autocommit
+                $miDB->beginTransaction();
+                //realizamos 3 inserciones 1 de ellas esta ya introducida la primary key
+                $resultadoConsulta1 = $miDB->exec("INSERT INTO T02_Departamento (T02_CodDepartamento,T02_DescDepartamento,T02_VolumenDeNegocio,T02_FechaCreacionDepartamento) VALUES('TES','Departamento de Transporte',123523.32,now())");
+                $resultadoConsulta2 = $miDB->exec("INSERT INTO T02_Departamento (T02_CodDepartamento,T02_DescDepartamento,T02_VolumenDeNegocio,T02_FechaCreacionDepartamento) VALUES('ROB','Departamento de Robótica',15826,now())");
+                $resultadoConsulta3 = $miDB->exec("INSERT INTO T02_Departamento (T02_CodDepartamento,T02_DescDepartamento,T02_VolumenDeNegocio,T02_FechaCreacionDepartamento) VALUES('RHH','Departamento de Recursos Humanos',125,now())");
+
+                //hacemos el commit
+                $miDB->commit();
+
+                //si todo ha ido bien mostramos todos los registros
+                $resultadoDepartamentos = $miDB->query("select * from T02_Departamento");
+                print '<table>';
+                print '<tr><th>codDepartamento</th><th>descDepartamento</th><th>fechaBaja</th><th>volumenNegocio</th><th>fechaAlta</th></tr>';
+                $mostrarDepartamentos = $resultadoDepartamentos->fetchObject();
+                while ($mostrarDepartamentos != null) {
+                    print"<tr>";
+                    while ($mostrarDepartamentos != null) {
+                        print"<tr>";
+                        echo "<td>$mostrarDepartamentos->T02_CodDepartamento</td>";
+                        echo "<td>$mostrarDepartamentos->T02_DescDepartamento</td>";
+                        echo "<td>$mostrarDepartamentos->T02_FechaBajaDepartamento</td>";
+                        echo "<td>$mostrarDepartamentos->T02_VolumenDeNegocio</td>";
+                        echo "<td>$mostrarDepartamentos->T02_FechaCreacionDepartamento</td>";
+                        $mostrarDepartamentos = $resultadoDepartamentos->fetchObject();
+                    }
+                    print "</tr>";
+                }
+                print '</table>';
+            } catch (PDOException $miExcepcionPDO) {
+                //revierte los cambios
+                $miDB->rollBack();
+                //mostramos el mensaje de error
+                echo $miExcepcionPDO->getMessage();
+            } finally {
+                //nos desconectamos de la base de datos
+                unset($miDB);
+            }
+            ?>
         </main>
     </body>
 </html>
