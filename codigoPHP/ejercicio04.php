@@ -7,8 +7,97 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
     <head>
         <meta charset="UTF-8">
         <title>Ejercicio 04 - Alejandro De la Huerga</title>
-        <link rel="stylesheet" href="../webroot/css/estilosEjercicio03.css"/>
+        <!--<link rel="stylesheet" href="../webroot/css/estilosEjercicio03.css"/>-->
         <style>
+            *{
+                box-sizing: border-box;
+                margin: 0;
+            }
+
+            body {
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                font-family: Arial, sans-serif;
+                background: lightslategray;
+            }
+
+            header{
+                background: lightpink;
+                width: 100%;
+                height: 150px;                 /* puedes ajustar la altura */
+                display: flex;                 /* activa flexbox */
+                flex-direction: column;        /* los elementos uno debajo del otro */
+                justify-content: center;       /* centra verticalmente */
+                align-items: center;           /* centra horizontalmente */
+                text-align: center;
+            }
+            
+            .formulario {
+                border:2px solid lightpink;
+                border-radius:12px;
+                padding:24px;
+                background:#fff;
+                width:100%;
+                max-width:760px;
+                margin: 20px auto;
+                box-shadow:0 6px 20px rgba(0,0,0,0.06);
+            }
+            .formulario h2{
+                margin-bottom: 15px;
+            }
+            main {
+                text-align: center;
+                flex: 1; /* empuja el footer abajo */
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                height: 70vh;
+            }
+            header h1{
+                margin-bottom: 10px;
+                font-family: "Playfair Display", serif;
+                font-size: 2.0rem;
+            }
+            
+            /* BOTONES centrados y a la misma altura */
+            .botones{
+                display:flex;
+                justify-content:center;
+                gap:16px;
+                margin-top:18px;
+            }
+            
+            input[type="text"], input[type="date"]{
+                flex:1;
+                height:36px;
+                width: 80%;
+                border:1px solid black;
+                border-radius:6px;
+                padding:6px 10px;
+                font-size:15px;
+            }
+            
+            table{
+                margin: 2rem auto;
+                width: 70%;
+                border: 2px solid black;
+                border-collapse: collapse;
+            }
+
+            th{
+                background: lightpink;
+                padding: 5px;
+                border: 2px solid black;
+            }
+
+            td{
+                padding: 5px;
+                border: 2px solid black;
+                border-collapse: collapse;
+                background: white;
+            }
             .formulario h2{
                 margin-bottom: 20px;
             }
@@ -18,6 +107,24 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 
             }
             
+            input[type="submit"], a.cancelar{
+                background:#666;
+                color:#fff;
+                border:none;
+                padding:10px 18px;
+                border-radius:6px;
+                font-size:16px;
+                text-decoration:none;
+                display:inline-flex;
+                align-items:center;
+                justify-content:center;
+                min-width:120px;
+            }
+
+            input[type="submit"]:hover, a.cancelar:hover{
+                background:#4d4d4d;
+                cursor:pointer;
+            }
         </style>
     </head>
     <body>
@@ -67,7 +174,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                         
                 if(isset($_REQUEST['enviar'])){ // código que se ejecuta cuando se envia el formulario.
                       
-                    $aErrores['DescDepartamentoBuscar']= validacionFormularios::comprobarAlfabetico($_REQUEST['T02_DescDepartamento'], 255, 1, OBLIGATORIO);
+                    //$aErrores['DescDepartamentoBuscar']= validacionFormularios::comprobarAlfabetico($_REQUEST['T02_DescDepartamento'], 255, 1, OBLIGATORIO);
+                    
+                    if (!empty($_REQUEST['T02_DescDepartamento'])) {
+                        $aErrores['T02_DescDepartamento'] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['T02_DescDepartamento'], 255, 0, 0);
+                    }
                     
                 // Si en el array de errores encuentra un error la variable entradaOK pasa a un valor false.
                 
@@ -95,15 +206,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
             <section class="formulario">
                     <h2>Busca un departamento</h2>
                     <form name="formulario" action=<?php echo $_SERVER["PHP_SELF"]; ?> method="post">
-                            <label for="T02_DescDepartamento">
-                                <input type="text" name="T02_DescDepartamento"  
+                            <label class="buscar" for="T02_DescDepartamento">
+                                <input type="text" name="T02_DescDepartamento" class="buscar" 
                                         value='<?php echo (empty($aErrores['DescDepartamentoBuscar'])) ? ($_REQUEST['T02_DescDepartamento'] ?? '') : ''; ?>'/>
                                 <a style=color:red;> <?php echo $aErrores['DescDepartamentoBuscar'] ?>  </a>
                             </label>
                             <br/>
                             <div class="botones">
                                 <input type="submit" name="enviar" value="Buscar">
-
                             </div>
                     </form>
             </section>
@@ -115,18 +225,18 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                         
                     // Preparacon de la consulta con query.
                         
-                        $sql="SELECT * FROM T02_Departamento WHERE T02_DescDepartamento LIKE '%$aRespuestas[T02_DescDepartamento]%';";
+                        $sql="SELECT * FROM T02_Departamento WHERE T02_DescDepartamento LIKE '%$aRespuestas[T02_DescDepartamento]%' ORDER BY T02_DescDepartamento;";
                                 
                         $resultadoBusqueda=$miDB->query($sql);
                         
                         // Tabla para mostrar los registros de la tabla departamentos.
                         echo '<table>';
                         echo '<tr>';
-                        echo '<th>T02_CodDepartamento</th>';
-                        echo '<th>T02_DescDepartamento</th>';
-                        echo '<th>T02_FechaCreacionDepartamento</th>';
-                        echo '<th>T02_VolumenDeNegocio</th>';
-                        echo '<th>T02_FechaBajaDepartamento</th>';
+                        echo '<th>Codigo del Departamento</th>';
+                        echo '<th>Descripcion del Departamento</th>';
+                        echo '<th> Fecha Alta</th>';
+                        echo '<th>Volumen del Negocio</th>';
+                        echo '<th>Fecha Baja</th>';
                         echo '</tr>';
                         
                         while($registro = $resultadoBusqueda->fetchObject()){

@@ -7,8 +7,51 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
     <head>
         <meta charset="UTF-8">
         <title>Ejercicio 06 - Alejandro De la Huerga</title>
+        <style>
+            *{
+                box-sizing: border-box;
+                margin: 0;
+            }
+            
+            header{
+                width: 100%;
+                height: 13vh;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                background: lightblue;
+            }
+            
+            main{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 74vh;
+            }
+            
+            footer{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 13vh;
+                gap: 30px;
+                background: lightblue;
+            }
+            
+            footer img{
+                width: 40px;
+                height: auto;
+            }
+        </style>
     </head>
     <body>
+        <header>
+            <h1>Alejandro De la Huerga</h1>
+            <h2>Ejercicio 06</h2>
+        </header>
+        <main>
         <?php
             /**
              * @author Alejandro De la Huerga Fernández
@@ -64,7 +107,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                     ];
                     
                     // Preparación de la inserción.
-                    $insert=$miDB->query($query2);
+                    $insert=$miDB->prepare($query2);
                     
                     // Insertamos los datos introducidos en el array.
                     $insert->execute($parametrosConsulta);
@@ -97,5 +140,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 unset($miDB);
             }
         ?>
+        </main>
     </body>
+    
+    <footer>
+        <a href="../indexProyectoTema3.php">Alejandro De la Huerga Fernández</a>
+        <a href="https://github.com/alejandrohuerga/AHFDWESProyectoTema3.git">
+            <img src="../doc/images/github-logo.png"> 
+        </a>
+    </footer> 
 </html>

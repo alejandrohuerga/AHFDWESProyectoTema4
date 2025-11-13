@@ -70,18 +70,36 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
             $dsn = 'mysql:host=' . $_SERVER['SERVER_ADDR'] . ';dbname=DBAHFDWESProyectoTema4';  // Nombre de la base de datos
             $username = 'userAHFDWESProyectoTema4'; // Nombre de usuario de la base de datos
             $password = 'paso'; // password de la base de datos.
-
+            
+            
+            //Array en el cual estan almacenados los departamentos a registrar (Array que almacena array con los datos de inserción en cada campo).
+            $aDepartamentos = [
+                ["T02_CodDepartamento" => "TES",//codigo de departamento de formacion
+                 "T02_DescDepartamento" => "Departamento de Transporte",//descripcion del departamento de Transporte
+                 "T02_VolumenDeNegocio" => "123523.32"],//volumen de negocio del departamento de Transporte
+                ["T02_CodDepartamento" => "ROB",//codigo de departamento de Robotica
+                 "T02_DescDepartamento" => "Departamento de Robotica",//descripcion del departamento Robotica
+                 "T02_VolumenDeNegocio" => "15826"],//volumen de negocio del departamento Robotica
+                ["T02_CodDepartamento" => "RHH",//codigo de departamento de Recursos Humanos
+                 "T02_DescDepartamento" => "Departamento de Recursos Humanos",//descripcion del departamento  de Recursos Humanos
+                 "T02_VolumenDeNegocio" => "125"] //volumen de negocio del departamento PPP
+            ];
+            
             try {
-                $ejecucionCorrecta = true;
                 //hacemos la conexion
                 $miDB = new PDO($dsn, $username, $password);
+                
                 //desactivamos el modo autocommit
                 $miDB->beginTransaction();
+                
                 //realizamos 3 inserciones 1 de ellas esta ya introducida la primary key
-                $resultadoConsulta1 = $miDB->exec("INSERT INTO T02_Departamento (T02_CodDepartamento,T02_DescDepartamento,T02_VolumenDeNegocio,T02_FechaCreacionDepartamento) VALUES('TES','Departamento de Transporte',123523.32,now())");
-                $resultadoConsulta2 = $miDB->exec("INSERT INTO T02_Departamento (T02_CodDepartamento,T02_DescDepartamento,T02_VolumenDeNegocio,T02_FechaCreacionDepartamento) VALUES('ROB','Departamento de Robótica',15826,now())");
-                $resultadoConsulta3 = $miDB->exec("INSERT INTO T02_Departamento (T02_CodDepartamento,T02_DescDepartamento,T02_VolumenDeNegocio,T02_FechaCreacionDepartamento) VALUES('RHH','Departamento de Recursos Humanos',125,now())");
-
+                
+                foreach ($aDepartamentos as $registro){
+                    $sql='INSERT INTO T02_Departamento(T02_CodDepartamento,T02_DescDepartamento,T02_VolumenDeNegocio,T02_FechaCreacionDepartamento) VALUES ("'.$registro["T02_CodDepartamento"].'","'.$registro["T02_DescDepartamento"].'","'.$registro["T02_VolumenDeNegocio"].'",now())';
+                    $miDB->exec(($sql));
+                }
+                
+                $miDB->commit();
                 //hacemos el commit
                 $miDB->commit();
 

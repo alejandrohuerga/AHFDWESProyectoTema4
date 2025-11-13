@@ -79,6 +79,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
         ?>
     </main>
     </body>
+    <!--
     <footer>
         <a href="/AHFDWESProyectoTema4/indexProyectoTema4.php">
             <p>Alejandro De la Huerga</p>
@@ -87,4 +88,5 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
             <img src="../doc/images/github-logo.png" class="logo" alt=""/>
         </a>
     </footer>
+    -->
 </html>

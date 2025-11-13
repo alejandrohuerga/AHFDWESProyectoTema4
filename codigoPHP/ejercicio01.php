@@ -24,9 +24,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
            atributos al instanciar el objeto PDO.
         */
         
-            const DSN = 'mysql:host=10.199.8.195; dbname=DBAHFDWESProyectoTema4';
-            const USERNAME = 'userAHFDWESProyectoTema4';
-            const PASSWORD = 'paso';
+            $dsn= 'mysql:host='.$_SERVER['SERVER_ADDR'].';dbname=DBAHFDWESProyectoTema4';  // Nombre de la base de datos
+            $username = 'userAHFDWESProyectoTema4';
+            $password = 'paso';
         
         // Array con los atributos de conexión para mostrarlos más adelante.
         
@@ -48,7 +48,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
         
             echo '<h3>Conexión a la base de datos DBAHFDWESProyectoTema4 correctamente</h3>';
             try{
-                $miDB= new PDO(DSN,USERNAME,PASSWORD);
+                $miDB= new PDO($dsn,$username,$password);
                 echo 'Conectado a la Base de Datos correctamente </br>';
                 
                 echo '<p><b>Atributos de la conexión</b></p>';
