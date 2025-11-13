@@ -30,6 +30,26 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 height: 74vh;
             }
             
+            table{
+                border: 1px solid black;
+                
+            }
+            
+            tr{
+                border: 1px solid black;
+                
+            }
+            
+            th{
+                background: lightblue;
+                padding: 4px;
+            }
+            
+            td{
+                border: 1px solid black;
+                padding: 4px;
+            }
+            
             footer{
                 display: flex;
                 align-items: center;
@@ -102,8 +122,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                     $parametrosConsulta=[
                         ":T02_CodDepartamento"=>$aDepartamento['T02_CodDepartamento'],
                         ":T02_DescDepartamento"=>$aDepartamento['T02_DescDepartamento'],
-                        "T02_VolumenDeNegocio"=>$aDepartamento['T02_VolumenDeNegocio']
-                                            
+                        ":T02_VolumenDeNegocio"=>$aDepartamento['T02_VolumenDeNegocio']                       
                     ];
                     
                     // Preparación de la inserción.
@@ -116,7 +135,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 $resultadoDepartamentos=$miDB->query("SELECT * FROM T02_Departamento");
                 
                 print '<table>';
-                print '<tr><th>codDepartamento</th><th>descDepartamento</th><th>fechaBaja</th><th>volumenNegocio</th><th>fechaAlta</th></tr>';
+                print '<tr><th>Codigo Departamento</th><th>Descripcion Departamento</th><th>Fecha Alta</th><th>Volumen Negocio</th><th>Fecha Baja</th></tr>';
                 $mostrarDepartamentos = $resultadoDepartamentos->fetchObject();
                 while ($mostrarDepartamentos != null) {
                     print"<tr>";
@@ -124,9 +143,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                         print"<tr>";
                         echo "<td>$mostrarDepartamentos->T02_CodDepartamento</td>";
                         echo "<td>$mostrarDepartamentos->T02_DescDepartamento</td>";
-                        echo "<td>$mostrarDepartamentos->T02_FechaBajaDepartamento</td>";
-                        echo "<td>$mostrarDepartamentos->T02_VolumenDeNegocio</td>";
                         echo "<td>$mostrarDepartamentos->T02_FechaCreacionDepartamento</td>";
+                        echo "<td>$mostrarDepartamentos->T02_VolumenDeNegocio</td>";
+                        echo "<td>$mostrarDepartamentos->T02_FechaBajaDepartamento</td>";
                         $mostrarDepartamentos = $resultadoDepartamentos->fetchObject();
                     }
                     print "</tr>";

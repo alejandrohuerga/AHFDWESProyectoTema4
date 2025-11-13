@@ -54,6 +54,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                     'T02_VolumenDeNegocio'=>null,   
                 ];
                 
+            
+                
                 define('OBLIGATORIO',1); // Constante booleana que define que un campo es obligatorio.
                 $entradaOK=true; //Variable booleana que valida que la entrada esta bien , inicializada a true.
                 

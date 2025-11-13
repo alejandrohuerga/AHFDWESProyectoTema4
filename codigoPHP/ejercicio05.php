@@ -26,23 +26,44 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
             main{
                 height: 72vh;
                 display: flex;
+                flex-direction: column;
                 align-items: center;
                 justify-content: center;
                 font-size: 1.2rem;
             }
             
-            footer{
-                width: 100%;
-                height: 130px;
+            table{
+                border: 1px solid black;
+                
+            }
+            
+            tr{
+                border: 1px solid black;
+                
+            }
+            
+            th{
                 background: lightblue;
+                padding: 4px;
+            }
+            
+            td{
+                border: 1px solid black;
+                padding: 4px;
+            }
+            
+            footer{
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                width: 100%;
+                height: 13vh;
                 gap: 30px;
+                background: lightblue;
             }
             
             footer img{
-                width: 50px;
+                width: 40px;
                 height: auto;
             }
         </style>
@@ -74,15 +95,21 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
             
             //Array en el cual estan almacenados los departamentos a registrar (Array que almacena array con los datos de inserción en cada campo).
             $aDepartamentos = [
-                ["T02_CodDepartamento" => "TES",//codigo de departamento de formacion
-                 "T02_DescDepartamento" => "Departamento de Transporte",//descripcion del departamento de Transporte
-                 "T02_VolumenDeNegocio" => "123523.32"],//volumen de negocio del departamento de Transporte
-                ["T02_CodDepartamento" => "ROB",//codigo de departamento de Robotica
-                 "T02_DescDepartamento" => "Departamento de Robotica",//descripcion del departamento Robotica
-                 "T02_VolumenDeNegocio" => "15826"],//volumen de negocio del departamento Robotica
-                ["T02_CodDepartamento" => "RHH",//codigo de departamento de Recursos Humanos
-                 "T02_DescDepartamento" => "Departamento de Recursos Humanos",//descripcion del departamento  de Recursos Humanos
-                 "T02_VolumenDeNegocio" => "125"] //volumen de negocio del departamento PPP
+                [
+                    "CodDepartamentoInsertar" => "TES", //codigo de departamento de formacion
+                    "DescDepartamentoInsertar" => "Departamento de Transporte", //descripcion del departamento de Transporte
+                    "VolumenDeNegocioInsertar" => "123523.32" //volumen de negocio del departamento de Transporte
+                ],
+                [
+                    "CodDepartamentoInsertar" => "ROB", //codigo de departamento de Robotica
+                    "DescDepartamentoInsertar" => "Departamento de Robotica", //descripcion del departamento Robotica
+                    "VolumenDeNegocioInsertar" => "15826" //volumen de negocio del departamento Robotica
+                ],
+                [
+                    "CodDepartamentoInsertar" => "RHH", //codigo de departamento de Recursos Humanos
+                    "DescDepartamentoInsertar" => "Departamento de Recursos Humanos", //descripcion del departamento  de Recursos Humanos
+                    "VolumenDeNegocioInsertar" => "125" //volumen de negocio del departamento PPP
+                ] 
             ];
             
             try {
@@ -92,45 +119,67 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 //desactivamos el modo autocommit
                 $miDB->beginTransaction();
                 
-                //realizamos 3 inserciones 1 de ellas esta ya introducida la primary key
+                // Consulta preparada
+                $query2=<<<query
+                        INSERT INTO T02_Departamento (T02_CodDepartamento,T02_DescDepartamento,T02_FechaCreacionDepartamento,
+                        T02_VolumenDeNegocio) VALUES (:CodDepartamentoInsertar,:DescDepartamentoInsertar,now(),:VolumenDeNegocioInsertar);
+                    query;
                 
                 foreach ($aDepartamentos as $registro){
-                    $sql='INSERT INTO T02_Departamento(T02_CodDepartamento,T02_DescDepartamento,T02_VolumenDeNegocio,T02_FechaCreacionDepartamento) VALUES ("'.$registro["T02_CodDepartamento"].'","'.$registro["T02_DescDepartamento"].'","'.$registro["T02_VolumenDeNegocio"].'",now())';
-                    $miDB->exec(($sql));
+                    $aParametrosConsulta=[
+                        ":CodDepartamentoInsertar"=>$registro["CodDepartamentoInsertar"],
+                        ":DescDepartamentoInsertar"=>$registro["DescDepartamentoInsertar"],
+                        ":VolumenDeNegocioInsertar"=>$registro["VolumenDeNegocioInsertar"]
+                    ];
+                    
+                    // Preparación de la inserción.
+                    $insert=$miDB->prepare($query2);
+                    
+                    // Insertamos los datos introducidos en el array.
+                    $insert->execute($aParametrosConsulta);
+                    
+                    //$miDB->exec(($sql));
                 }
                 
-                $miDB->commit();
+                
                 //hacemos el commit
                 $miDB->commit();
-
+                
+                
+                
                 //si todo ha ido bien mostramos todos los registros
                 $resultadoDepartamentos = $miDB->query("select * from T02_Departamento");
                 print '<table>';
-                print '<tr><th>codDepartamento</th><th>descDepartamento</th><th>fechaBaja</th><th>volumenNegocio</th><th>fechaAlta</th></tr>';
+                print '<tr><th>Codigo Departamento</th><th>Descripcion Departamento</th><th>Fecha Alta</th><th>Volumen Negocio</th><th>Fecha Baja</th></tr>';
                 $mostrarDepartamentos = $resultadoDepartamentos->fetchObject();
                 while ($mostrarDepartamentos != null) {
-                    print"<tr>";
+                    
                     while ($mostrarDepartamentos != null) {
                         print"<tr>";
                         echo "<td>$mostrarDepartamentos->T02_CodDepartamento</td>";
                         echo "<td>$mostrarDepartamentos->T02_DescDepartamento</td>";
-                        echo "<td>$mostrarDepartamentos->T02_FechaBajaDepartamento</td>";
-                        echo "<td>$mostrarDepartamentos->T02_VolumenDeNegocio</td>";
                         echo "<td>$mostrarDepartamentos->T02_FechaCreacionDepartamento</td>";
+                        echo "<td>$mostrarDepartamentos->T02_VolumenDeNegocio</td>";
+                        echo "<td>$mostrarDepartamentos->T02_FechaBajaDepartamento</td>";
+                        print"</tr>";
                         $mostrarDepartamentos = $resultadoDepartamentos->fetchObject();
                     }
-                    print "</tr>";
+                    
                 }
+                
                 print '</table>';
+                
             } catch (PDOException $miExcepcionPDO) {
                 //revierte los cambios
                 $miDB->rollBack();
+                echo "<br>Transacción fallida. Cambios deshechos (ROLLBACK).";
                 //mostramos el mensaje de error
                 echo $miExcepcionPDO->getMessage();
             } finally {
                 //nos desconectamos de la base de datos
                 unset($miDB);
             }
+            
             ?>
         </main>
     </body>
