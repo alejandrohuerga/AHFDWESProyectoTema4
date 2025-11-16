@@ -107,7 +107,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
             try{
                 // Realizamos la conexion con la base de datos.
                 $miDB=new PDO($dsn,$username,$password);
-                
+                $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                echo "<h3>Conexión establecida con éxito.</h3>";
                 // Creamos la consulta con el insert
                 
                 $query2=<<< sql

@@ -250,12 +250,38 @@
                         Departamento de nuestra base de datos.
                     </td>
                     <td>
+                        <a href="mostrarcodigo/muestraEjercicio06.php" >
+                            <img src="doc/images/eye.png" class="logo" alt=""/>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="codigoPHP/ejercicio07.php" >
+                            <img src="doc/images/play.svg" class="logo" alt=""/>
+                        </a>
+                    </td>
+                    <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
                             <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
+                            <img src="" class="logo" alt=""/>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>Página web que toma datos (código y descripción) de un fichero JSON y los añade a la tabla
+                        Departamento de nuestra base de datos.
+                    </td>
+                    <td>
+                        <a href="" >
+                            <img src="" class="logo" alt=""/>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="" >
                             <img src="" class="logo" alt=""/>
                         </a>
                     </td>
@@ -276,12 +302,38 @@
                         fichero departamento.xml. (COPIA DE SEGURIDAD / EXPORTAR).
                     </td>
                     <td>
+                        <a href="mostrarcodigo/muestraEjercicio08.php" >
+                            <img src="doc/images/eye.png" class="logo" alt=""/>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="codigoPHP/ejercicio08.php" >
+                            <img src="doc/images/play.svg" class="logo" alt=""/>
+                        </a>
+                    </td>
+                    <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
                             <img src="" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
                         <a href="mostrarCodigo/mostrarCreacionBDDesarrollo.php" >
+                            <img src="" class="logo" alt=""/>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>Página web que toma datos (código y descripción) de la tabla Departamento y guarda en un
+                        fichero departamento.JSON. (COPIA DE SEGURIDAD / EXPORTAR).
+                    </td>
+                    <td>
+                        <a href="" >
+                            <img src="" class="logo" alt=""/>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="" >
                             <img src="" class="logo" alt=""/>
                         </a>
                     </td>
