@@ -10,7 +10,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
     </head>
     <body>
         <?php
-            highlight_file("../codigoPHP/ejercicio04.php");
+            highlight_file("../codigoPHP/ejercicio04Ps.php");
         ?>
     </body>
 </html>

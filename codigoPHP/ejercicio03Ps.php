@@ -6,15 +6,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Ejercicio 03 Consulta Preparada - Alejandro de la Huerga</title>
+        <title>Ejercicio 03 - Consulta Preparada</title>
         <link rel="stylesheet" href="../webroot/css/estilosEjercicio03.css"/>
     </head>
     <body>
-    <main>
         <header>
             <h1>TEMA 4 : TÉCNICAS DE ACCESO PHP</h1>
             <h2>EJERCICIO 3</h2>
         </header>
+        <main>
             <?php
             /**
              * @author Alejandro De la Huerga Fernández
@@ -29,7 +29,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 //enlace para importar las librerías de validación de campos
                 
                 require_once '../core/231018libreriaValidacion.php';
-
+                
+                
+                
                 // Atributos para el establecimiento de conexión con la base de datos.
                 // Utilizamos la variable super global $_SERVER para obtener la ip.
             
@@ -37,8 +39,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 $username = 'userAHFDWESProyectoTema4'; // Nombre de usuario de la base de datos
                 $password = 'paso'; // password de la base de datos.
                 
+                // Establecimiento de conexion mediante la instancia un objeto PDO
+                $miDB= new PDO($dsn,$username,$password);
+                $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 
-            // Array que almacena los errores
+                // Array que almacena los errores
             
                 $aErrores=[
                     'T02_CodDepartamento' =>'',
@@ -46,7 +51,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                     'T02_VolumenDeNegocio'=>'',  
                 ];
             
-            // Array que almacena las respuestas , inicializadas a null
+                // Array que almacena las respuestas , inicializadas a null
             
                 $aRespuestas=[
                     'T02_CodDepartamento' =>null,
@@ -65,8 +70,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                     $aErrores['T02_CodDepartamento']= validacionFormularios::comprobarAlfabetico($_REQUEST['T02_CodDepartamento'], 3, 3, OBLIGATORIO);
                     $aErrores['T02_DescDepartamento']= validacionFormularios::comprobarAlfabetico($_REQUEST['T02_DescDepartamento'], 255, 1, OBLIGATORIO);
                     $aErrores['T02_VolumenDeNegocio']= validacionFormularios::comprobarFloat($_REQUEST['T02_VolumenDeNegocio'], PHP_FLOAT_MAX, 0, OBLIGATORIO);
-                    
-                    
+ 
                 // Si en el array de errores encuentra un error la variable entradaOK pasa a un valor false.
                 
                     foreach ($aErrores as $campo => $valor) {
@@ -90,9 +94,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                     
                     try{
                         
-                    // Establecimiento de conexion mediante la instancia un objeto PDO
-                        $miDB= new PDO($dsn,$username,$password);
-                        
                     // Preparacon de la consulta con query.
                         
                         $sql=<<<EOT
@@ -106,7 +107,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                             );   
                         EOT;
                                 
-                        $miDB->query($sql);
+                        //consulta preparada para devolver datos
+                        $consultaPreparada = $miDB->prepare($sql);
+                        $consultaPreparada->execute();
+                        
+                        
                         
                         echo "<p style='color:green; font-weight:bold;'>DEPARTAMENTO INSERTADO CORRECTAMENTE</p>";
                         
@@ -126,7 +131,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 }else{ 
                 // Si no se ha ingresado correctamente volvemos a mostrar el formulario.
                 ?>
-                <section class="formulario">
+            <section class="formulario">
                     <h2>Inserta un nuevo departamento</h2>
                     <form name="formulario" action=<?php echo $_SERVER["PHP_SELF"]; ?> method="post">
                             <label for="T02_CodDepartamento">T02_CodDepartamento:
@@ -160,47 +165,60 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 <?php        
                 }
                 ?>
-                </section>
-                <section class="contenedorTabla">
-                    <?php
-                    
-                        // Establecimiento de conexion mediante la instancia un objeto PDO
-                        $miDB= new PDO($dsn,$username,$password);
+            </section>
+                <?php
+                try {
+                    // Establecimiento de conexion mediante la instancia un objeto PDO
+                    $miDB= new PDO($dsn,$username,$password);
+                    $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                         
-                        // Consulta no preparada.
-                        $sqlDepartamentos='SELECT * FROM T02_Departamento';
-                        $resultadoDepartamentos=$miDB->query($sqlDepartamentos);
-                        
-                        // Tabla para mostrar los registros de la tabla departamentos.
-                        echo '<table>';
-                        echo '<tr>';
-                        echo '<th>T02_CodDepartamento</th>';
-                        echo '<th>T02_DescDepartamento</th>';
-                        echo '<th>T02_FechaCreacionDepartamento</th>';
-                        echo '<th>T02_VolumenDeNegocio</th>';
-                        echo '<th>T02_FechaBajaDepartamento</th>';
-                        echo '</tr>';
+                    //consulta preparada para devolver datos
+                    $consultaPreparada2 = $miDB->prepare('SELECT * FROM T02_Departamento');
+                    $consultaPreparada2->execute();
 
-                        while($registro = $resultadoDepartamentos->fetch(PDO::FETCH_ASSOC)){
-                            echo '<tr>';
-                            echo '<td>'.$registro['T02_CodDepartamento'].'</td>';
-                            echo '<td>'.$registro['T02_DescDepartamento'].'</td>';
-                            echo '<td>'.$registro['T02_FechaCreacionDepartamento'].'</td>';
-                            echo '<td>'.number_format($registro['T02_VolumenDeNegocio'], 2, ",", ".").'</td>';
-                            echo '<td>'.$registro['T02_FechaBajaDepartamento'].'</td>';
-                            echo '</tr>';
+                    //Mostrar los registros
+                    //https://www.php.net/manual/es/pdostatement.fetch.php
+
+
+                    echo'<table>';
+                    echo '<tr>';
+                    echo'<th> Codigo </th>';
+                    echo '<th> Fecha Creación </th>';
+                    echo '<th> Fecha Baja </th>';
+                    echo '<th> Descripción </th>';
+                    echo '<th> Volumen de Negocio</th>';
+                    echo '</tr>';
+
+                    while ($oRegistroObject = $consultaPreparada2->fetchObject()) {
+                        echo '<tr>';
+                        echo'<td> ' . $oRegistroObject->T02_CodDepartamento . '</td>';
+                        $oFechaCreacion = new DateTime($oRegistroObject->T02_FechaCreacionDepartamento);
+                        echo'<td> ' . $oFechaCreacion->format("d-m-Y") . '</td>';
+                        if (!is_null($oRegistroObject->T02_FechaBajaDepartamento)) {
+                            //si no se pone la condición la fecha no es null
+                            $oFechaBaja = new DateTime($oRegistroObject->T02_FechaBajaDepartamento);
+                            echo '<td>' . $oFechaBaja->format("d-m-Y") . '</td>';
+                        } else {
+                            echo '<td>Activo</td>';
                         }
-                        echo '</table>';
-                    ?>
-                </section>
+                        echo'<td> ' . $oRegistroObject->T02_DescDepartamento . '</td>';
+                        echo'<td> ' . number_format($oRegistroObject->T02_VolumenDeNegocio, 2, ',', '.') . '€</td>';
+                        echo '</tr>';
+                    }
+
+                    $numRegistros = $miDB->prepare('SELECT COUNT(*) FROM T02_Departamento');
+                    $numRegistros->execute();
+                    $total = $numRegistros->fetchColumn();
+                    echo '<tr>';
+                    echo "<td class='registro' colspan=5><strong>Número de registros:</strong> $total</td>";
+                    echo '</table>';
+                } catch (PDOException $miExceptionPDO) {
+                    echo '<p style="color:purple; font-weight:bold;">Error: ' . $miExceptionPDO->getMessage() . '<br>' . 'Código de error: ' . $miExceptionPDO->getCode();
+                } finally {
+                    //mejor dentro para que se cierre en todos los casos.
+                    unset($miDB);
+                }
+                ?>
         </main>
     </body>
-    <footer>
-        <a href="/AHFDWESProyectoTema4/indexProyectoTema4.php">
-            <p>Alejandro De la Huerga</p>
-        </a>
-        <a href="https://github.com/alejandrohuerga/AHFDWESProyectoTema4.git">
-            <img src="../doc/images/github-logo.png" class="logo" alt=""/>
-        </a>
-    </footer>
 </html>
