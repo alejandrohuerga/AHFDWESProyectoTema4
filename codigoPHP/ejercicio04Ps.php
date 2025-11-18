@@ -164,12 +164,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 require_once '../core/231018libreriaValidacion.php';
                 
                 
-                // Atributos para el establecimiento de conexión con la base de datos.
-                // Utilizamos la variable super global $_SERVER para obtener la ip.
-            
-                $dsn= 'mysql:host='.$_SERVER['SERVER_ADDR'].';dbname=DBAHFDWESProyectoTema4';  // Nombre de la base de datos
-                $username = 'userAHFDWESProyectoTema4'; // Nombre de usuario de la base de datos
-                $password = 'paso'; // password de la base de datos.
+                //enlace a los datos de conexión
+                require_once '../config/confDBPDO.php';
                 
                  // Array que almacena los errores
                 
@@ -235,7 +231,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                     try{
                         
                     // Establecimiento de conexion mediante la instancia un objeto PDO
-                        $miDB= new PDO($dsn,$username,$password);
+                        $miDB = new PDO(DNS, USUARIODB, PSWD);
                         $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                     // Preparacon de la consulta con query.
                         if (empty($aRespuestas['T02_DescDepartamento'])) {

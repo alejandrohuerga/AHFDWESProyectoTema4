@@ -85,12 +85,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
               insert y una transacción, de tal forma que se añadan los tres registros o no se añada ninguno.
              */
             $numRegistros = 0; // Variable para contar el numero de registros que devuelve la consulta.
-            // Atributos para el establecimiento de conexión con la base de datos.
-            // Utilizamos la variable super global $_SERVER para obtener la ip.
-
-            $dsn = 'mysql:host=' . $_SERVER['SERVER_ADDR'] . ';dbname=DBAHFDWESProyectoTema4';  // Nombre de la base de datos
-            $username = 'userAHFDWESProyectoTema4'; // Nombre de usuario de la base de datos
-            $password = 'paso'; // password de la base de datos.
+            
+            //enlace a los datos de conexión
+            require_once '../config/confDBPDO.php';
             
             
             //Array en el cual estan almacenados los departamentos a registrar (Array que almacena array con los datos de inserción en cada campo).
@@ -114,7 +111,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
             
             try {
                 //hacemos la conexion
-                $miDB = new PDO($dsn, $username, $password);
+                $miDB = new PDO(DNS, USUARIODB, PSWD);
                 
                 //desactivamos el modo autocommit
                 $miDB->beginTransaction();

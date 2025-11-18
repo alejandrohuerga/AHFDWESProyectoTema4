@@ -70,14 +70,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                     Utilizar excepciones automáticas siempre que sea posible en todos los ejercicios.
                 */
 
-                /* Preparación de los datos de conexión en constantes para luego usarlos como
-                   atributos al instanciar el objeto PDO.
-                */
-
-                    $dsn= 'mysql:host='.$_SERVER['SERVER_ADDR'].';dbname=DBAHFDWESProyectoTema4';  // Nombre de la base de datos
-                    $username = 'userAHFDWESProyectoTema4';
-                    $password = 'paso';
-
+                //enlace a los datos de conexión
+                require_once '../config/confDBPDO.php';
+                
                 // Array con los atributos de conexión para mostrarlos más adelante.
 
                     $aAtributos= array(
@@ -98,7 +93,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
 
                     echo '<h3>Conexión a la base de datos DBAHFDWESProyectoTema4 correctamente</h3>';
                     try{
-                        $miDB= new PDO($dsn,$username,$password);
+                        $miDB = new PDO(DNS, USUARIODB, PSWD);
                         echo 'Conectado a la Base de Datos correctamente </br>';
 
                         echo '<h4><b>Atributos de la conexión</b></h4>';

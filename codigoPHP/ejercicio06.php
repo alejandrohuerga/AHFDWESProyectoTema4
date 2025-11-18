@@ -85,12 +85,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                   pasando los parámetros en un array a execute.
              */
         
-             // Atributos para el establecimiento de conexión con la base de datos.
-            // Utilizamos la variable super global $_SERVER para obtener la ip.
-
-            $dsn = 'mysql:host=' . $_SERVER['SERVER_ADDR'] . ';dbname=DBAHFDWESProyectoTema4';  // Nombre de la base de datos
-            $username = 'userAHFDWESProyectoTema4'; // Nombre de usuario de la base de datos
-            $password = 'paso'; // password de la base de datos.
+            //enlace a los datos de conexión
+            require_once '../config/confDBPDO.php';
             
             //Array en el cual estan almacenados los departamentos a registrar (Array que almacena array con los datos de inserción en cada campo).
             $aDepartamentos = [
@@ -107,7 +103,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
             
             try{
                 // Realizamos la conexion con la base de datos.
-                $miDB=new PDO($dsn,$username,$password);
+                $miDB = new PDO(DNS, USUARIODB, PSWD);
                 $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 echo "<h3>Conexión establecida con éxito.</h3>";
                 // Creamos la consulta con el insert
