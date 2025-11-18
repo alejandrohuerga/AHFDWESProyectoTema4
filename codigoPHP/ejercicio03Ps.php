@@ -12,7 +12,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
     <body>
         <header>
             <h1>TEMA 4 : TÉCNICAS DE ACCESO PHP</h1>
-            <h2>EJERCICIO 3</h2>
+            <h2>EJERCICIO 3 - CONSULTA PREPARADA</h2>
         </header>
         <main>
             <?php

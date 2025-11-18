@@ -6,7 +6,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Ejercicio 08 - Alejandro De la Huerga</title>
+        <title>Ejercicio 08 - JSON</title>
         <style>
             *{
                 box-sizing: border-box;
@@ -48,11 +48,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
         </style>
     </head>
     <body>
-        <header>
-            <h1>Ejercicio 08 - XML</h1>
-            <a href="../indexProyectoTema4.php"><h2>Alejandro De la Huerga</h2></a>
+        <header class="header">
+            <a href="../indexProyectoTema4.php">Alejandro De la Huerga</a>
+            <h1>Ejercicio 08 - JSON</h1>
         </header>
-       <main>
+        <main>
             <section>
                 <?php
                 /**
@@ -61,17 +61,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                  * 
                  *  * Ejercicio 8
                  * Página web que toma datos (código y descripción) de la tabla Departamento y 
-                 * guarda en un fichero departamento.xml. (COPIA DE SEGURIDAD / EXPORTAR). El fichero 
+                 * guarda en un fichero departamento.JSON. (COPIA DE SEGURIDAD / EXPORTAR). El fichero 
                  * exportado se encuentra en el directorio .../tmp/ del servidor.
                   /**
-                 * Script para exportar departamentos de la base de datos a un archivo XML
+                 * Script para exportar departamentos de la base de datos a un archivo JSON
                  * 
                  * Este archivo realiza las siguientes operaciones:
                  * 1. Consulta los departamentos almacenados en la base de datos
-                 * 2. Crea un objeto SimpleXMLElement con la estructura XML
-                 * 3. Itera sobre los resultados y construye el árbol XML
-                 * 4. Guarda el archivo XML generado en el sistema de archivos
-                 * 
+                 * 2. Construye un array asociativo con los datos recuperados
+                 * 3. Codifica el array a formato JSON
+                 * 4. Guarda el archivo JSON generado en el sistema de archivos
+
                  */
                 
                 // Atributos para el establecimiento de conexión con la base de datos.
@@ -113,48 +113,51 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                     $consultaPreparada->execute();
 
                     /**
-                     * Objeto SimpleXMLElement para construir la estructura XML
-                     * Inicializado con la declaración XML y el elemento raíz 'departamentos'
+                     * Array que contendrá todos los departamentos para convertir a JSON
+                     * Estructura: ['departamentos' => [array de departamentos]]
                      * 
-                     * @var SimpleXMLElement $xml Objeto que representa el documento XML
+                     * @var array $aDepartamentos Array principal que contendrá el array de departamentos
                      */
-                    //https://www.php.net/manual/es/book.simplexml.php
-                    //https://www.w3schools.com/php/php_ref_simplexml.asp
-                    //creacion del objeto XML
-                    $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><departamentos></departamentos>');
+                    //Inicialización del array de departamentos
+                    $aDepartamentos = ['departamentos' => []];
 
                     /**
                      * Itera sobre cada departamento recuperado de la base de datos
-                     * Crea un elemento 'departamento' con sus hijos 'codDpto' y 'descDpto'
+                     * Construye un array asociativo con los datos y lo añade al array principal
                      * 
-                     * @var objeto $oDepartamento Objeto con los datos de cada departamento
-                     * @var SimpleXMLElement $elemento Elemento XML 'departamento' añadido al árbol
+                     * @var stdClass $oDepartamento Objeto con los datos de cada departamento
                      */
                     while ($oDepartamento = $consultaPreparada->fetchObject()) {
-                        $elemento = $xml->addChild('departamento');
-                        $elemento->addChild('codDpto', $oDepartamento->T02_CodDepartamento);
-                        $elemento->addChild('descDpto', $oDepartamento->T02_DescDepartamento);
+                        $aDepartamentos['departamentos'][] = [
+                            'codDpto' => $oDepartamento->T02_CodDepartamento,
+                            'descDpto' => $oDepartamento->T02_DescDepartamento
+                        ];
                     }
 
                     /**
-                     * Ruta absoluta donde se guardará el archivo XML generado
+                     * Convierte el array PHP a formato JSON con formato legible
+                     * JSON_PRETTY_PRINT: Formatea el JSON con indentación
+                     * JSON_UNESCAPED_UNICODE: Mantiene los caracteres Unicode
+                     * 
+                     * @var string $json Cadena JSON generada a partir del array
+                     */
+                    
+                    //Codificación a JSON
+                    $json = json_encode($aDepartamentos, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
+                    /**
+                     * Ruta absoluta donde se guardará el archivo JSON generado
                      * 
                      * @var string $rutaFichero Ruta completa del archivo de destino
                      */
-                    /*Se guarda el fichero en la carpeta tmp.
-                    Es importante que la carpeta tmp tenga permisos de lectura y escritura para que php pueda guardar el fichero departamentos.php
-                    para ello se ejecutan estos commandos en el servidor
-                    sudo chown -R www-data:www-data /var/www/html/VGDWESProyectoTema4/tmp
-                    sudo chmod 775 /var/www/html/VGDWESProyectoTema4/tmp
-                    Hay que mirar si el fichero está en la capreta tmp del servidor 
-                     porque no se ve en la carpeta tmp de netbeans si no se descarga manualmente
-                     */
-                    $rutaFichero = '../tmp/departamentos.xml';
+                    //Se guarda el fichero en la carpeta tmp
+                    $rutaFichero = '../tmp/departamentos.json';
 
                     /**
-                     * Guarda el objeto XML como archivo en el sistema de archivos
+                     * Guarda el contenido JSON en el archivo 
                      */
-                    $xml->asXML($rutaFichero);
+                    
+                    file_put_contents($rutaFichero, $json);
                     echo "<p>Ruta generada: $rutaFichero</p>";
 
                     //Mensaje de confirmación
@@ -174,7 +177,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 } catch (Exception $miExcepcionGeneral) {
                     /**
                      * Captura cualquier otra excepción no relacionada con PDO
-                     * Por ejemplo, errores al crear o guardar el archivo XML
+                     * Por ejemplo, errores al codificar o guardar el archivo JSON
                      * 
                      * @var Exception $miExcepcionGeneral Excepción general capturada
                      */
@@ -189,12 +192,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 }
                 ?>
             </section>
+
+
         </main>
     </body>
-    <footer>
-        <a href="../indexProyectoTema3.php">Alejandro De la Huerga Fernández</a>
-        <a href="https://github.com/alejandrohuerga/AHFDWESProyectoTema3.git">
-            <img src="../doc/images/github-logo.png"> 
-        </a>
-    </footer> 
 </html>

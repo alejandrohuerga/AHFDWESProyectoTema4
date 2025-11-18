@@ -124,12 +124,27 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 background:#4d4d4d;
                 cursor:pointer;
             }
+            
+            footer{
+                background: lightpink;
+                height: 15vh;
+                display: flex;                /* Activa Flexbox */
+                justify-content: center;      /* Centra los elementos horizontalmente */
+                align-items: center;          /* Centra verticalmente */
+                gap: 40px;
+                margin-top: auto;
+            }
+
+            footer img{
+                width: 50px;
+                height: 50px;
+            }
         </style>
     </head>
     <body>
         <header>
             <h1>TEMA 4 : TÉCNICAS DE ACCESO PHP</h1>
-            <h2>EJERCICIO 3</h2>
+            <h2>EJERCICIO 4 - CONSULTA PREPARADA</h2>
         </header>
         <main> 
         <?php
@@ -267,6 +282,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                             echo '</tr>';
                         }
                         
+                        
+                        
                         // Consulta preparada para sacar el numero de registros.
                         
                         $numRegistros=$miDB->prepare('SELECT COUNT(*) FROM T02_Departamento');
@@ -274,7 +291,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                         $total=$numRegistros->fetchColumn();
                         
                         echo '<h3>Numero de registros: '.$total.'</h3>';
-                        
+                        echo '</table>';
                     } catch (PDOException $miExceptionPDO) {
                         echo 'Error: '.$miExceptionPDO->getMessage();
                         echo '<br>';
@@ -284,5 +301,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                     }
                 ?>
         </main>
+        <footer>
+            <a href="/AHFDWESProyectoTema4/indexProyectoTema4.php">
+                <p>Alejandro De la Huerga</p>
+            </a>
+            <a href="https://github.com/alejandrohuerga/AHFDWESProyectoTema4.git">
+                <img src="../doc/images/github-logo.png" class="logo" alt=""/>
+            </a>
+        </footer>
     </body>
 </html>

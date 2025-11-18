@@ -6,7 +6,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Ejercicio 07 - Alejandro De la Huerga</title>
+        <title>Ejercicio 07 - JSON</title>
         <style>
             *{
                 box-sizing: border-box;
@@ -48,29 +48,29 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
         </style>
     </head>
     <body>
-        <header>
-            <h1>Ejercicio 07 - XML</h1>
-            <h2>Alejandro De la Huerga</h2>
+        <header class="header">
+            <a href="../indexProyectoTema4.php"><h1>Alejandro De la Huerga</h1></a>
+            <h1>Ejercicio 07</h1>
         </header>
         <main>
-        <section>
+            <section>
                 <?php
                 /**
-                 * @author: Véronique Grué
-                 * @since 13/11/2025
+                 * @author: Alejandro De la Huerga
+                 * @since 18/11/2025
                  * 
                  *  * Ejercicio 7
-                 * 	Página web que toma datos (código y descripción) de un fichero xml y 
-                 * los añade a la tabla Departamento de nuestra base de datos.
+                 *    Página web que toma datos (código y descripción) de un fichero xml y 
+                 *    los añade a la tabla Departamento de nuestra base de datos.
                   /**
-                 * Script para importar departamentos desde un archivo XML a la base de datos
+                 * Script para importar departamentos desde un archivo JSON a la base de datos
                  * 
                  * Este archivo realiza las siguientes operaciones:
-                 * 1. Verifica la existencia del archivo XML
-                 * 2. Carga y parsea el archivo XML con SimpleXML
+                 * 1. Verifica la existencia del archivo JSON
+                 * 2. Carga y decodifica el archivo JSON
                  * 3. Inserta los departamentos en la base de datos mediante transacciones PDO
                  * 4. Confirma o revierte la transacción según el resultado
-                  */
+                 */
                 
                 // Atributos para el establecimiento de conexión con la base de datos.
                 // Utilizamos la variable super global $_SERVER para obtener la ip.
@@ -80,38 +80,52 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 $password = 'paso'; // password de la base de datos.
 
                 /**
-                 * Ruta absoluta del archivo XML con los datos de departamentos
+                 * Ruta absoluta del archivo JSON con los datos de departamentos
                  * 
-                 * @var string $rutaFichero Ruta completa al archivo XML
+                 * @var string $rutaFichero Ruta completa al archivo JSON
                  */
-                $rutaFichero = '../tmp/departamentos.xml';
+                $rutaFichero = '../tmp/departamentos.json';
 
                 /**
-                 * Verifica que el archivo XML existe en la ruta especificada
+                 * Verifica que el archivo JSON existe en la ruta especificada
                  * Si no existe, termina la ejecución del script
                  */
-                    // Comprobación de la existencia del archivo
-                    // https://www.w3schools.com/php/func_misc_exit.asp
+                // Comprobación de la existencia del archivo
                 if (!file_exists($rutaFichero)) {
-                    exit('<p style="color:red;">Error: No se encuentra el fichero XML.</p>');
+                    exit('<p style="color:red;">Error: No se encuentra el fichero JSON.</p>');
                 }
 
                 /**
-                 * Carga el archivo XML y lo convierte en un objeto SimpleXMLElement
+                 * Lee el contenido del archivo JSON
                  * 
-                 * @var SimpleXMLElement|false $xml Objeto con la estructura del XML o false si falla
+                 * @var string|false $contenidoJSON Contenido del archivo JSON o false si falla
                  */
-                    // Conversión del fichero xml a objeto
-                    // https://www.w3schools.com/php/func_simplexml_load_file.asp
-                $xml = simplexml_load_file($rutaFichero);
+                // Lectura del archivo JSON
+                $contenidoJSON = file_get_contents($rutaFichero);
 
                 /**
-                 * Verifica que el XML se haya cargado correctamente
+                 * Verifica que se pudo leer el archivo
+                 * https://www.php.net/manual/es/function.json-decode.php
+                 */
+                if ($contenidoJSON === false) {
+                    exit('<p style="color:red;">Error: No se pudo leer el archivo JSON.</p>');
+                }
+
+                /**
+                 * Decodifica el contenido JSON a un array asociativo PHP
+                 * 
+                 * @var array|null $json Array con los datos decodificados del JSON o null si falla
+                 */
+                // Decodificación del JSON
+                $json = json_decode($contenidoJSON, true);
+
+                /**
+                 * Verifica que el JSON se haya decodificado correctamente
                  * Si falla, termina la ejecución del script
                  */
-                // Verificar que el XML se cargó correctamente
-                if ($xml === false) {
-                    exit('<p style="color:red;">Error: No se pudo cargar el archivo XML.</p>');
+                // Verificar que el JSON se decodificó correctamente
+                if ($json === null) {
+                    exit('<p style="color:red;">Error: No se pudo decodificar el archivo JSON.</p>');
                 }
 
                 try {
@@ -121,7 +135,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                      * 
                      * @var PDO $miDB Objeto de conexión a la base de datos
                      */
-                    
                     // Conexion a la base de datos
                     $miDB = new PDO($dsn, $username, $password);
                     $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -153,20 +166,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                     $consultaPreparada = $miDB->prepare($sql);
 
                     /**
-                     * Recorre cada elemento departamento del XML e inserta los datos en la base de datos
-                     * Convierte cada campo del XML al tipo de dato apropiado antes de la inserción
+                     * Recorre cada elemento departamento del JSON e inserta los datos en la base de datos
+                     * Convierte cada campo del JSON al tipo de dato apropiado antes de la inserción
                      * 
-                     * @var SimpleXMLElement $dep Elemento departamento del XML
+                     * @var array $dep Array con los datos de cada departamento
                      * @var string $codigo Código del departamento
                      * @var string $descripcion Descripción del departamento
                      * @var float $volumen Volumen de negocio del departamento (0.00 por defecto)
                      */
-                    // Recorremos el fichero xml con transacción
-                    // https://www.php.net/manual/es/simplexml.examples-basic.php
-                    foreach ($xml->departamento as $dep) {
-                        $codigo = (string) $dep->codDpto;
-                        $descripcion = (string) $dep->descDpto;
-                        $volumen = isset($dep->volumen) ? (float) $dep->volumen : 0.00;
+                    // Recorremos el array JSON con transacción
+                    foreach ($json['departamentos'] as $dep) {
+                        $codigo = (string) $dep['codDpto'];
+                        $descripcion = (string) $dep['descDpto'];
+                        $volumen = isset($dep['volumen']) ? (float) $dep['volumen'] : 0.00;
 
                         $consultaPreparada->bindParam(':codigo', $codigo);
                         $consultaPreparada->bindParam(':descripcion', $descripcion);
@@ -179,7 +191,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
 
                     // CONFIRMAR TRANSACCIÓN
                     $miDB->commit();
-                    echo "<h3 style='color:green;'>Datos insertados correctamente desde el XML.</h3>";
+                    echo "<h3 style='color:green;'>Datos insertados correctamente desde el JSON.</h3>";
                 } catch (PDOException $miExceptionPDO) {
                     /**
                      * Captura errores de PDO durante la transacción
@@ -206,10 +218,4 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
             </section>
         </main>
     </body>
-    <footer>
-        <a href="../indexProyectoTema3.php">Alejandro De la Huerga Fernández</a>
-        <a href="https://github.com/alejandrohuerga/AHFDWESProyectoTema3.git">
-            <img src="../doc/images/github-logo.png"> 
-        </a>
-    </footer> 
 </html>

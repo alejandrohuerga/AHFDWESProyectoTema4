@@ -1,0 +1,60 @@
+{
+    "departamentos": [
+        {
+            "codDpto": "CON",
+            "descDpto": "Departamento de contabilidad"
+        },
+        {
+            "codDpto": "DEP",
+            "descDpto": "Departamento de Deportes"
+        },
+        {
+            "codDpto": "FOR",
+            "descDpto": "Departamento de Formacion"
+        },
+        {
+            "codDpto": "INF",
+            "descDpto": "Departamento de informática"
+        },
+        {
+            "codDpto": "MAN",
+            "descDpto": "Departamento de mantenimiento"
+        },
+        {
+            "codDpto": "MAR",
+            "descDpto": "Departamento de marketing"
+        },
+        {
+            "codDpto": "PPP",
+            "descDpto": "Departamento de PPP"
+        },
+        {
+            "codDpto": "PRO",
+            "descDpto": "Departamento de producción"
+        },
+        {
+            "codDpto": "RHH",
+            "descDpto": "Departamento de Recursos Humanos"
+        },
+        {
+            "codDpto": "ROB",
+            "descDpto": "Departamento de Robotica"
+        },
+        {
+            "codDpto": "SOS",
+            "descDpto": "Departamento de sostenibilidad"
+        },
+        {
+            "codDpto": "TES",
+            "descDpto": "Departamento de Transporte"
+        },
+        {
+            "codDpto": "THR",
+            "descDpto": "Departamento de THR"
+        },
+        {
+            "codDpto": "VID",
+            "descDpto": "Departamento de Videojuegos"
+        }
+    ]
+}

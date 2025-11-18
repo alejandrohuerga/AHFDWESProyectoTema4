@@ -127,7 +127,7 @@
                         </a>
                     </td>
                     <td>
-                        <a href="codigoPHP/ejercicio02.php" >
+                        <a href="codigoPHP/ejercicio02Ps.php" >
                             <img src="doc/images/play.svg" class="logo" alt=""/>
                         </a>
                     </td>
@@ -152,7 +152,7 @@
                         </a>
                     </td>
                     <td>
-                        <a href="codigoPHP/ejercicio03.php" >
+                        <a href="codigoPHP/ejercicio03Ps.php" >
                             <img src="doc/images/play.svg" class="logo" alt=""/>
                         </a>
                     </td>
@@ -177,7 +177,7 @@
                         </a>
                     </td>
                     <td>
-                        <a href="codigoPHP/ejercicio04.php" >
+                        <a href="codigoPHP/ejercicio04Ps.php" >
                             <img src="doc/images/play.svg" class="logo" alt=""/>
                         </a>
                     </td>
@@ -203,7 +203,7 @@
                         </a>
                     </td>
                     <td>
-                        <a href="codigoPHP/ejercicio05.php" >
+                        <a href="codigoPHP/ejercicio05Ps.php" >
                             <img src="doc/images/play.svg" class="logo" alt=""/>
                         </a>
                     </td>
@@ -220,7 +220,7 @@
                 </tr>
                 <tr>
                     <td>6</td>
-                    <td>Pagina web que cargue registros en la tabla Departamento desde un array departamentosnuevos
+                    <td>Pagina web que cargue registros en la tabla Departamento desde un array departamentos nuevos
                         utilizando una consulta preparada
                     </td>
                     <td>
@@ -250,7 +250,7 @@
                         Departamento de nuestra base de datos.
                     </td>
                     <td>
-                        <a href="mostrarcodigo/muestraEjercicio06.php" >
+                        <a href="mostrarcodigo/muestraEjercicio07.php" >
                             <img src="doc/images/eye.png" class="logo" alt=""/>
                         </a>
                     </td>
@@ -276,13 +276,13 @@
                         Departamento de nuestra base de datos.
                     </td>
                     <td>
-                        <a href="" >
-                            <img src="" class="logo" alt=""/>
+                        <a href="mostrarcodigo/muestraEjercicio07JSON.php" >
+                            <img src="doc/images/eye.png" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
-                        <a href="" >
-                            <img src="" class="logo" alt=""/>
+                        <a href="codigoPHP/ejercicio07JSON.php" >
+                            <img src="doc/images/play.svg" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
@@ -328,13 +328,13 @@
                         fichero departamento.JSON. (COPIA DE SEGURIDAD / EXPORTAR).
                     </td>
                     <td>
-                        <a href="" >
-                            <img src="" class="logo" alt=""/>
+                        <a href="mostrarCodigo/muestraEjercicio08JSON.php" >
+                            <img src="doc/images/eye.png" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>
-                        <a href="" >
-                            <img src="" class="logo" alt=""/>
+                        <a href="codigoPHP/ejercicio08JSON.php" >
+                            <img src="doc/images/play.svg" class="logo" alt=""/>
                         </a>
                     </td>
                     <td>

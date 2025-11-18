@@ -7,7 +7,84 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
     <head>
         <meta charset="UTF-8">
         <title>Ejercicio 2 - Alejandro De la Huerga</title>
-        <link rel="stylesheet" href="../webroot/css/estilosEjercicio02.css"/>
+        <style>
+            *{
+                box-sizing: border-box;
+                margin: 0;
+            }
+
+            header{
+                background: lightpink;
+                height: 100px;                 /* puedes ajustar la altura */
+                display: flex;                 /* activa flexbox */
+                flex-direction: column;        /* los elementos uno debajo del otro */
+                justify-content: center;       /* centra verticalmente */
+                align-items: center;           /* centra horizontalmente */
+                text-align: center;
+            }
+
+            header h1{
+                margin-bottom: 10px;
+                font-family: "Playfair Display", serif;
+                font-size: 2.0rem;
+            }
+
+            main {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                height: 75vh;
+            }
+            
+            
+            h3{
+                display: inline-block;
+                text-align: center;
+                margin: 10px;
+                width: 30%;
+                font-size: 1.5rem;
+            }
+
+            h3:nth-of-type(2){
+                background-color: lightpink;
+                border: 2px solid black;
+            }
+
+            table{
+                width: 70%;
+                border: 2px solid black;
+            }
+
+            th{
+                background: lightpink;
+                padding: 10px;
+                border: 2px solid black ;
+
+            }
+
+            td{
+                padding: 10px;
+                border: 2px solid black;
+                border-collapse: collapse;
+            }
+
+            footer{
+                background: lightpink;
+                height: 15vh;
+                display: flex;                /* Activa Flexbox */
+                justify-content: center;      /* Centra los elementos horizontalmente */
+                align-items: center;          /* Centra verticalmente */
+                gap: 40px;
+                margin-top: auto;
+            }
+
+            footer img{
+                width: 50px;
+                height: 50px;
+            }
+        </style>   
     </head>
     <body>
         <header>
@@ -79,7 +156,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
         ?>
     </main>
     </body>
-    <!--
     <footer>
         <a href="/AHFDWESProyectoTema4/indexProyectoTema4.php">
             <p>Alejandro De la Huerga</p>
@@ -88,5 +164,4 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
             <img src="../doc/images/github-logo.png" class="logo" alt=""/>
         </a>
     </footer>
-    -->
 </html>

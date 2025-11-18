@@ -6,7 +6,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Ejercicio 06 - Alejandro De la Huerga</title>
+        <title>EJERCICIO 05 - CONSULTA PREPARADA</title>
         <style>
             *{
                 box-sizing: border-box;
@@ -15,20 +15,21 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
             
             header{
                 width: 100%;
-                height: 13vh;
+                height: 140px;
                 display: flex;
                 flex-direction: column;
-                align-items: center;
                 justify-content: center;
-                background: lightblue;
+                align-items: center;
+                background-color: lightblue;
             }
             
             main{
+                height: 72vh;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                height: 74vh;
+                font-size: 1.2rem;
             }
             
             table{
@@ -69,79 +70,83 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
     </head>
     <body>
         <header>
-            <h1><a href="../indexProyectoTema4.php">Alejandro De la Huerga</a></h1>
-            <h2>Ejercicio 06</h2>
+            <h1>TEMA 4 : TÉCNICAS DE ACCESO PHP</h1>
+            <h2>EJERCICIO 5 - CONSULTA PREPARADA</h2>
         </header>
         <main>
-        <?php
+            <?php
             /**
              * @author Alejandro De la Huerga Fernández
              * @version 1.0
              * @date 2025-11-12 
              * 
              *
-             * 6. Pagina web que cargue registros en la tabla Departamento desde un array departamentosnuevos
-                  utilizando una consulta preparada. Probar consultas preparadas sin bind,
-                  pasando los parámetros en un array a execute.
+             * 5. Pagina web que añade tres registros a nuestra tabla Departamento utilizando tres instrucciones
+              insert y una transacción, de tal forma que se añadan los tres registros o no se añada ninguno.
              */
-        
-             // Atributos para el establecimiento de conexión con la base de datos.
+            $numRegistros = 0; // Variable para contar el numero de registros que devuelve la consulta.
+            // Atributos para el establecimiento de conexión con la base de datos.
             // Utilizamos la variable super global $_SERVER para obtener la ip.
 
             $dsn = 'mysql:host=' . $_SERVER['SERVER_ADDR'] . ';dbname=DBAHFDWESProyectoTema4';  // Nombre de la base de datos
             $username = 'userAHFDWESProyectoTema4'; // Nombre de usuario de la base de datos
             $password = 'paso'; // password de la base de datos.
             
+            
             //Array en el cual estan almacenados los departamentos a registrar (Array que almacena array con los datos de inserción en cada campo).
             $aDepartamentos = [
-                ["T02_CodDepartamento" => "FOR",//codigo de departamento de formacion
-                 "T02_DescDepartamento" => "Departamento de Formacion",//descripcion del departamento de Formacion
-                 "T02_VolumenDeNegocio" => "1"],//volumen de negocio del departamento de Formacion
-                ["T02_CodDepartamento" => "THR",//codigo de departamento de THR
-                 "T02_DescDepartamento" => "Departamento de THR",//descripcion del departamento THR
-                 "T02_VolumenDeNegocio" => "85"],//volumen de negocio del departamento THR
-                ["T02_CodDepartamento" => "PPP",//codigo de departamento de PPP
-                 "T02_DescDepartamento" => "Departamento de PPP",//descripcion del departamento  PPP
-                 "T02_VolumenDeNegocio" => "1234.63"] //volumen de negocio del departamento PPP
+                [
+                    "CodDepartamentoInsertar" => "TES", //codigo de departamento de formacion
+                    "DescDepartamentoInsertar" => "Departamento de Transporte", //descripcion del departamento de Transporte
+                    "VolumenDeNegocioInsertar" => "123523.32" //volumen de negocio del departamento de Transporte
+                ],
+                [
+                    "CodDepartamentoInsertar" => "ROB", //codigo de departamento de Robotica
+                    "DescDepartamentoInsertar" => "Departamento de Robotica", //descripcion del departamento Robotica
+                    "VolumenDeNegocioInsertar" => "15826" //volumen de negocio del departamento Robotica
+                ],
+                [
+                    "CodDepartamentoInsertar" => "RHH", //codigo de departamento de Recursos Humanos
+                    "DescDepartamentoInsertar" => "Departamento de Recursos Humanos", //descripcion del departamento  de Recursos Humanos
+                    "VolumenDeNegocioInsertar" => "125" //volumen de negocio del departamento PPP
+                ] 
             ];
             
-            try{
-                // Realizamos la conexion con la base de datos.
-                $miDB=new PDO($dsn,$username,$password);
+            try {
+                //hacemos la conexion
+                $miDB = new PDO($dsn, $username, $password);
                 $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                echo "<h3>Conexión establecida con éxito.</h3>";
-                // Creamos la consulta con el insert
                 
-                // Inicia la transacción para garantizar la integridad de los datos
+                //desactivamos el modo autocommit
                 $miDB->beginTransaction();
                 
-                $sql=<<< sql
-                        INSERT INTO T02_Departamento (T02_CodDepartamento,T02_DescDepartamento,
-                         T02_VolumenDeNegocio,T02_FechaCreacionDepartamento)
-                        VALUES (:codigo,:descripcion,:volumen,NOW());
-                    sql;
+                // Consulta preparada
+                $sql=<<<query
+                        INSERT INTO T02_Departamento (T02_CodDepartamento,T02_DescDepartamento,T02_FechaCreacionDepartamento,
+                        T02_VolumenDeNegocio) VALUES (:codigo,:descripcion,now(),:volumen);
+                    query;
                 
                 $consultaPreparada=$miDB->prepare($sql);
-                        
-                foreach($aDepartamentos as $departamento){
-                    $consultaPreparada->bindParam(':codigo', $departamento['T02_CodDepartamento']);
-                    $consultaPreparada->bindParam(':descripcion', $departamento['T02_DescDepartamento']);
-                    $consultaPreparada->bindParam(':volumen', $departamento['T02_VolumenDeNegocio']);
+                
+                foreach ($aDepartamentos as $departamento){
+                    
+                    $consultaPreparada->bindParam(':codigo', $departamento['CodDepartamentoInsertar']);
+                    $consultaPreparada->bindParam(':descripcion', $departamento['DescDepartamentoInsertar']);
+                    $consultaPreparada->bindParam(':volumen', $departamento['olumenDeNegocioInsertar']);
 
                     $consultaPreparada->execute();
                 }
                 
-                
+                //hacemos el commit
                 $miDB->commit();
-                echo "<h3 style='color:green; font-weight:bold;'>Todos los departamentos fueron insertados correctamente.</h3>";
                 
-                $resultadoDepartamentos=$miDB->query("SELECT * FROM T02_Departamento");
-                
+                //si todo ha ido bien mostramos todos los registros
+                $resultadoDepartamentos = $miDB->query("select * from T02_Departamento");
                 print '<table>';
                 print '<tr><th>Codigo Departamento</th><th>Descripcion Departamento</th><th>Fecha Alta</th><th>Volumen Negocio</th><th>Fecha Baja</th></tr>';
                 $mostrarDepartamentos = $resultadoDepartamentos->fetchObject();
                 while ($mostrarDepartamentos != null) {
-                    print"<tr>";
+                    
                     while ($mostrarDepartamentos != null) {
                         print"<tr>";
                         echo "<td>$mostrarDepartamentos->T02_CodDepartamento</td>";
@@ -149,25 +154,34 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                         echo "<td>$mostrarDepartamentos->T02_FechaCreacionDepartamento</td>";
                         echo "<td>$mostrarDepartamentos->T02_VolumenDeNegocio</td>";
                         echo "<td>$mostrarDepartamentos->T02_FechaBajaDepartamento</td>";
+                        print"</tr>";
                         $mostrarDepartamentos = $resultadoDepartamentos->fetchObject();
                     }
-                    print "</tr>";
+                    
                 }
+                
                 print '</table>';
+                
             } catch (PDOException $miExcepcionPDO) {
+                //revierte los cambios
+                $miDB->rollBack();
+                echo "<br>Transacción fallida. Cambios deshechos (ROLLBACK).";
                 //mostramos el mensaje de error
                 echo $miExcepcionPDO->getMessage();
             } finally {
                 //nos desconectamos de la base de datos
                 unset($miDB);
             }
-        ?>
+            
+            ?>
         </main>
+        <footer>
+            <a href="/AHFDWESProyectoTema4/indexProyectoTema4.php">
+                <p>Alejandro De la Huerga</p>
+            </a>
+            <a href="https://github.com/alejandrohuerga/AHFDWESProyectoTema4.git">
+                <img src="../doc/images/github-logo.png" class="logo" alt=""/>
+            </a>
+        </footer>
     </body>
-    <footer>
-        <a href="../indexProyectoTema3.php">Alejandro De la Huerga Fernández</a>
-        <a href="https://github.com/alejandrohuerga/AHFDWESProyectoTema3.git">
-            <img src="../doc/images/github-logo.png"> 
-        </a>
-    </footer> 
 </html>

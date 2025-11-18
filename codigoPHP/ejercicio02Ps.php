@@ -11,31 +11,46 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
         <style>
             *{
                 box-sizing: border-box;
-                margin: 0;  
+                margin: 0;
             }
-            
+
             header{
-                width: 100%;
-                height: 10vh;
-                background: lightcoral;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
+                background: lightpink;
+                height: 100px;                 /* puedes ajustar la altura */
+                display: flex;                 /* activa flexbox */
+                flex-direction: column;        /* los elementos uno debajo del otro */
+                justify-content: center;       /* centra verticalmente */
+                align-items: center;           /* centra horizontalmente */
+                text-align: center;
             }
-            
-            main{
-                width: 100%;
+
+            header h1{
+                margin-bottom: 10px;
+                font-family: "Playfair Display", serif;
+                font-size: 2.0rem;
+            }
+
+            main {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
+                text-align: center;
                 height: 75vh;
             }
             
+            
             h3{
-                margin: 20px;
-                font-size: 24px;
+                display: inline-block;
+                text-align: center;
+                margin: 10px;
+                width: 30%;
+                font-size: 1.5rem;
+            }
+
+            h3:nth-of-type(2){
+                background-color: lightpink;
+                border: 2px solid black;
             }
 
             table{
@@ -45,37 +60,37 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
 
             th{
                 background: lightpink;
-                padding: 10px;
+                padding: 6px;
                 border: 2px solid black ;
 
             }
 
             td{
-                padding: 10px;
+                padding: 6px;
                 border: 2px solid black;
                 border-collapse: collapse;
             }
-            
+
             footer{
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 100%;
-                height: 33vh;
-                gap: 30px;
-                background: lightcoral;
+                background: lightpink;
+                height: 15vh;
+                display: flex;                /* Activa Flexbox */
+                justify-content: center;      /* Centra los elementos horizontalmente */
+                align-items: center;          /* Centra verticalmente */
+                gap: 40px;
+                margin-top: auto;
             }
-            
+
             footer img{
-                width: 40px;
-                height: auto;
+                width: 50px;
+                height: 50px;
             }
         </style>
     </head>
     <body>
         <header>
             <h1>TEMA 4 : TÉCNICAS DE ACCESO PHP</h1>
-            <h2>EJERCICIO 02</h2>
+            <h2>EJERCICIO 02 - CONSULTA PREPARADA</h2>
         </header>
         <main>
             <?php
@@ -102,8 +117,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
 
                 echo '<h3>Contenido de la tabla T02_Departamento</h3>';
 
-                 try{
-                        
+                 try{   
                     // Establecimiento de conexion mediante la instancia un objeto PDO
                     $miDB= new PDO($dsn,$username,$password);
                     $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -124,40 +138,48 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                         echo '<th>Fecha Baja</th>';
                         echo '</tr>';
                         
-                        while($registro = $consultaPreparada2->fetchObject()){
-                            echo '<tr>';
-                            echo '<td>'.$registro->T02_CodDepartamento.'</td>';
-                            echo '<td>'.$registro->T02_DescDepartamento.'</td>';
-                            $oFechaCreacion = new DateTime($registro->T02_FechaCreacionDepartamento);
-                            echo '<td>'. $oFechaCreacion->format("d-m-Y") .'</td>';
-                            echo '<td>'.$registro->T02_VolumenDeNegocio.'</td>';
-                            if (!is_null($registro->T02_FechaBajaDepartamento)) {
-                                //si no se pone la condición la fecha no es null
-                                $oFechaBaja = new DateTime($registro->T02_FechaBajaDepartamento);
-                                echo '<td>' . $oFechaBaja->format("d-m-Y") . '</td>';
-                            } else {
-                                echo '<td>Activo</td>';
-                            }
-                            
-                            echo '</tr>';
-                        }
-                        
-                        // Consulta preparada para sacar el numero de registros.
-                        
-                        $numRegistros=$miDB->prepare('SELECT COUNT(*) FROM T02_Departamento');
-                        $numRegistros->execute();
-                        $total=$numRegistros->fetchColumn();
-                        
-                        echo '<h3>Numero de registros: '.$total.'</h3>';
-                        
-                    } catch (PDOException $miExceptionPDO) {
-                        echo 'Error: '.$miExceptionPDO->getMessage();
-                        echo '<br>';
-                        echo 'Código de error: '.$miExceptionPDO->getCode();  
-                    } finally{ 
-                        unset($miDB); 
+                    while($registro = $consultaPreparada2->fetchObject()){
+                        echo '<tr>';
+                        echo '<td>'.$registro->T02_CodDepartamento.'</td>';
+                        echo '<td>'.$registro->T02_DescDepartamento.'</td>';
+                        $oFechaCreacion = new DateTime($registro->T02_FechaCreacionDepartamento);
+                        echo '<td>'. $oFechaCreacion->format("d-m-Y") .'</td>';
+                        echo '<td>'.$registro->T02_VolumenDeNegocio.'</td>';
+                    if (!is_null($registro->T02_FechaBajaDepartamento)) {
+                         //si no se pone la condición la fecha no es null
+                        $oFechaBaja = new DateTime($registro->T02_FechaBajaDepartamento);
+                        echo '<td>' . $oFechaBaja->format("d-m-Y") . '</td>';
+                     } else {
+                        echo '<td>Activo</td>';
                     }
+                            
+                        echo '</tr>';
+                    }
+                        
+                    // Consulta preparada para sacar el numero de registros.
+                     echo '</table>';   
+                    $numRegistros=$miDB->prepare('SELECT COUNT(*) FROM T02_Departamento');
+                    $numRegistros->execute();
+                    $total=$numRegistros->fetchColumn();
+                        
+                    echo '<h3>Numero de registros: '.$total.'</h3>';
+                        
+                } catch (PDOException $miExceptionPDO) {
+                    echo 'Error: '.$miExceptionPDO->getMessage();
+                    echo '<br>';
+                    echo 'Código de error: '.$miExceptionPDO->getCode();  
+                } finally{ 
+                    unset($miDB); 
+                }
             ?>
         </main>
+        <footer>
+            <a href="/AHFDWESProyectoTema4/indexProyectoTema4.php">
+                <p>Alejandro De la Huerga</p>
+            </a>
+            <a href="https://github.com/alejandrohuerga/AHFDWESProyectoTema4.git">
+                <img src="../doc/images/github-logo.png" class="logo" alt=""/>
+            </a>
+        </footer>
     </body>
 </html>
