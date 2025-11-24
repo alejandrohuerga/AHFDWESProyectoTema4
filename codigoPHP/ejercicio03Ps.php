@@ -35,6 +35,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 //enlace a los datos de conexión
                 require_once '../config/confDBPDO.php';
                 
+                
+
                 // Establecimiento de conexion mediante la instancia un objeto PDO
                 $miDB = new PDO(DNS, USUARIODB, PSWD);
                 $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -165,7 +167,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 <?php
                 try {
                     // Establecimiento de conexion mediante la instancia un objeto PDO
-                    $miDB= new PDO($dsn,$username,$password);
+                    $miDB= new PDO(DNS,USUARIODB,PSWD);
                     $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                         
                     //consulta preparada para devolver datos

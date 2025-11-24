@@ -30,6 +30,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 justify-content: center;       /* centra verticalmente */
                 align-items: center;           /* centra horizontalmente */
                 text-align: center;
+                margin-bottom: 20px;
             }
             
             .formulario {
@@ -78,12 +79,22 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 font-size:15px;
             }
             
+            #descripcion{
+                margin: 20px;
+            }
+            
+            #enviar{
+                margin: 20px;
+            }
+            
             table{
                 margin: 2rem auto;
                 width: 70%;
                 border: 2px solid black;
                 border-collapse: collapse;
             }
+            
+            
 
             th{
                 background: lightpink;
@@ -147,7 +158,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
             <h2>EJERCICIO 4 - CONSULTA PREPARADA</h2>
         </header>
         <main> 
-        <?php
+            <?php
             /**
              * @author Alejandro De la Huerga Fernández
              * @version 1.0
@@ -155,147 +166,99 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
              * 
              *
              * 4. Formulario de búsqueda de departamentos por descripción (por una parte del campo
-                DescDepartamento, si el usuario no pone nada deben aparecer todos los departamentos).
-            */
-                // Con consulta preparada.
-                
-                //enlace para importar las librerías de validación de campos
-                
-                require_once '../core/231018libreriaValidacion.php';
-                
-                
-                //enlace a los datos de conexión
-                require_once '../config/confDBPDO.php';
-                
-                 // Array que almacena los errores
-                
-                $aErrores=[
-                  'DescDepartamentoBuscar'=>''  
-                ];
-                
-                // Array que almacena las respuestas , inicializadas a null
-                
-                $aRespuestas=[
-                    'T02_DescDepartamento'=>null 
-                ];
-                
-                define('OBLIGATORIO',0); // Constante booleana que define que un campo es obligatorio.
-                $entradaOK=true; //Variable booleana que valida que la entrada esta bien , inicializada a true.
-                        
-                if(isset($_REQUEST['enviar'])){ // código que se ejecuta cuando se envia el formulario.
-                      
-                    //$aErrores['DescDepartamentoBuscar']= validacionFormularios::comprobarAlfabetico($_REQUEST['T02_DescDepartamento'], 255, 1, OBLIGATORIO);
-                    
-                    if (!empty($_REQUEST['T02_DescDepartamento'])) {
-                        $aErrores['T02_DescDepartamento'] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['T02_DescDepartamento'], 255, 0, 0);
-                    }
-                    
-                    // Si en el array de errores encuentra un error la variable entradaOK pasa a un valor false.
-                
-                    foreach ($aErrores as $campo => $valor) {
-                        if($valor!=null){ // Si ha habido algun error $entradaOK es falso.
-                            $entradaOK=false;
-                        }else{
-                            $aRespuestas[0]=$_REQUEST['T02_DescDepartamento']; // Guardamos el dato correcto en el array de Respuestas.
-                        }
-                    }   
-                    
-                }else{
-                    $entradaOK=false; // Si el formulario no se ha rellenado nunca.
-                }
-                
-                // Tratamiento del formulario.
+              DescDepartamento, si el usuario no pone nada deben aparecer todos los departamentos).
+             */
             
-                if($entradaOK){
-                    
-                    $aRespuestas['T02_DescDepartamento']=$_REQUEST['T02_DescDepartamento'];      
-                    
+            require_once '../core/231018libreriaValidacion.php';
+            //Inicialización de variables
+            $entradaOK = true;
+            $aErrores = [
+                'descripcion' => '',
+            ];
+            $aRespuestas = [
+                'descripcion' => '',
+            ];
+            require_once '../config/confDBPDO.php';
+            $descripcion = null;
+            $sql = null;
+            $miDB = new PDO(DNS, USUARIODB, PSWD);
+            // Comprobar si el formulario se ha enviado
+            if (isset($_REQUEST['enviar'])) {
+                $aErrores['descripcion'] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['descripcion'], 255, 1, 0);
+                if (empty($aErrores['descripcion']) && preg_match('/[0-9]/', $_REQUEST['descripcion'])) {
+                    $aErrores['descripcion'] = 'El campo solo puede contener letras (sin números).';
                 }
-                // Si no se ha ingresado correctamente volvemos a mostrar el formulario.
-                ?>
-                <section class="formulario">
-                        <h2>Busca un departamento</h2>
-                        <form name="formulario" action=<?php echo $_SERVER["PHP_SELF"]; ?> method="post">
-                                <label class="buscar" for="T02_DescDepartamento">
-                                    <input type="text" name="T02_DescDepartamento" class="buscar" 
-                                            value='<?php echo (empty($aErrores['DescDepartamentoBuscar'])) ? ($_REQUEST['T02_DescDepartamento'] ?? '') : ''; ?>'/>
-                                    <a style=color:red;> <?php echo $aErrores['DescDepartamentoBuscar'] ?>  </a>
-                                </label>
-                                <br/>
-                                <div class="botones">
-                                    <input type="submit" name="enviar" value="Buscar">
-                                </div>
-                        </form>
-                </section>
-                <?php 
-                    try{
-                        
-                    // Establecimiento de conexion mediante la instancia un objeto PDO
-                        $miDB = new PDO(DNS, USUARIODB, PSWD);
-                        $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    // Preparacon de la consulta con query.
-                        if (empty($aRespuestas['T02_DescDepartamento'])) {
-                            
-                            $sql = "SELECT * FROM T02_Departamento ";
-                            
-                        } else {
-                            
-                            //Consulta si el usuario introduce parte o la totalidad de la descripción
-                            $Respuestas = "%" . $aRespuestas['T02_DescDepartamento'] . "%";
-
-                            $sql = "SELECT * FROM T02_Departamento WHERE T02_DescDepartamento LIKE '$Respuestas'";
-                        }
-    
-                                
-                        $consultaPreparada2=$miDB->prepare($sql);
-                        $consultaPreparada2->execute();
-                        
-                        // Tabla para mostrar los registros de la tabla departamentos.
-                        echo '<table>';
-                        echo '<tr>';
-                        echo '<th>Codigo del Departamento</th>';
-                        echo '<th>Descripcion del Departamento</th>';
-                        echo '<th> Fecha Alta</th>';
-                        echo '<th>Volumen del Negocio</th>';
-                        echo '<th>Fecha Baja</th>';
-                        echo '</tr>';
-                        
-                        while($registro = $consultaPreparada2->fetchObject()){
-                            echo '<tr>';
-                            echo '<td>'.$registro->T02_CodDepartamento.'</td>';
-                            echo '<td>'.$registro->T02_DescDepartamento.'</td>';
-                            $oFechaCreacion = new DateTime($registro->T02_FechaCreacionDepartamento);
-                            echo '<td>'. $oFechaCreacion->format("d-m-Y") .'</td>';
-                            echo '<td>'.$registro->T02_VolumenDeNegocio.'</td>';
-                            if (!is_null($registro->T02_FechaBajaDepartamento)) {
-                                //si no se pone la condición la fecha no es null
-                                $oFechaBaja = new DateTime($registro->T02_FechaBajaDepartamento);
-                                echo '<td>' . $oFechaBaja->format("d-m-Y") . '</td>';
-                            } else {
-                                echo '<td>Activo</td>';
-                            }
-                            
-                            echo '</tr>';
-                        }
-                        
-                        
-                        
-                        // Consulta preparada para sacar el numero de registros.
-                        
-                        $numRegistros=$miDB->prepare('SELECT COUNT(*) FROM T02_Departamento');
-                        $numRegistros->execute();
-                        $total=$numRegistros->fetchColumn();
-                        
-                        echo '<h3>Numero de registros: '.$total.'</h3>';
-                        echo '</table>';
-                    } catch (PDOException $miExceptionPDO) {
-                        echo 'Error: '.$miExceptionPDO->getMessage();
-                        echo '<br>';
-                        echo 'Código de error: '.$miExceptionPDO->getCode();  
-                    } finally{ 
-                        unset($miDB); 
+                foreach ($aErrores as $campo => $valor) {
+                    if ($valor != null) { // Si ha habido algun error $entradaOK es falso.
+                        $entradaOK = false;
                     }
-                ?>
+                }
+            } else {
+                // Formulario no enviado aún
+                $entradaOK = false;
+            }
+            // Tratamiento del formulario
+            ?>
+            <div>
+                <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
+                    <label for="descripcion">Buscar Departamento de:</label>
+                    <input type="text" name="descripcion" id="descripcion" value="<?php echo(empty($aErrores['descripcion'])) ? ($_REQUEST['descripcion'] ?? '') : ''; ?>">
+                    <span style="color:red;"><?php echo $aErrores['descripcion']; ?></span>
+
+                    <input type="submit" name="enviar" value="Buscar" id="enviar">
+                </form>
+            </div>
+            <?php
+            if ($entradaOK) {
+                foreach ($aRespuestas as $campo => $valor) {
+                    $aRespuestas[$campo] = $_REQUEST[$campo];
+                }
+                $descripcion = $aRespuestas['descripcion'];
+
+                try {
+                    echo '<h3>RESULTADO DE BUSQUEDA: </h3>';
+
+                    if (empty($aRespuestas['descripcion'])) {
+                        $consulta = $miDB->prepare("SELECT * FROM T02_Departamento");
+                        $consulta->execute();
+                        $sql = $consulta->fetchAll(PDO::FETCH_OBJ);
+                    } else {
+                        $consulta = $miDB->prepare("
+                        SELECT *
+                        FROM T02_Departamento
+                        WHERE T02_DescDepartamento LIKE :descripcion
+                    ");
+
+                        $param = "%" . $descripcion . "%";
+                        $consulta->bindValue(':descripcion', $param);
+
+                        $consulta->execute();
+                        $sql = $consulta->fetchAll(PDO::FETCH_OBJ);
+                    }
+                    echo '<table>';
+                    echo '<tr id="titulotabla"><td>Codigo de Departamento</td><td>Descripción</td><td>Fecha de Creación</td><td>Volumen de Negocio</td><td>Fecha de Baja</td></tr>';
+                    // Con fetchAll() uso foreach() porque devuelve un array con todas las filas
+                    foreach ($sql as $registro) {
+                        echo '<tr>';
+                        foreach (get_object_vars($registro) as $campo => $valor) {
+                            if (!is_null($valor)) {
+                                echo "<td>$valor</td>";
+                            } else {
+                                echo "<td>No Determinado</td>";
+                            }
+                        }
+                        echo "</tr>";
+                    }
+                    echo '</table>';
+                } catch (PDOException $miExceptionPDO) {
+                    echo 'Error: ' . $miExceptionPDO->getMessage();
+                    echo '<br>';
+                    echo 'Código de error: ' . $miExceptionPDO->getCode();
+                } finally {
+                    unset($miDB);
+                }
+            }
+            ?>
         </main>
         <footer>
             <a href="/AHFDWESProyectoTema4/indexProyectoTema4.php">
