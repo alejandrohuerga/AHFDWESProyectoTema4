@@ -159,6 +159,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                     //Mensaje de confirmación
                     echo "<h3 style='color:blue;'>Exportación completada con éxito.</h3>";
                     echo "<p>El archivo se ha guardado en: <b>{$rutaFichero}</b></p>";
+                    
                 } catch (PDOException $miExceptionPDO) {
                     /**
                      * Captura errores específicos de PDO durante la conexión o consulta
@@ -188,8 +189,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 }
                 ?>
             </section>
-
-
         </main>
     </body>
 </html>

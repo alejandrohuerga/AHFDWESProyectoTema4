@@ -96,6 +96,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                  * 
                  * @var string|false $contenidoJSON Contenido del archivo JSON o false si falla
                  */
+                
                 // Lectura del archivo JSON
                 $contenidoJSON = file_get_contents($rutaFichero);
 
@@ -106,12 +107,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHPWebPage.php to 
                 if ($contenidoJSON === false) {
                     exit('<p style="color:red;">Error: No se pudo leer el archivo JSON.</p>');
                 }
-
                 /**
                  * Decodifica el contenido JSON a un array asociativo PHP
                  * 
                  * @var array|null $json Array con los datos decodificados del JSON o null si falla
                  */
+                
                 // Decodificación del JSON
                 $json = json_decode($contenidoJSON, true);
 
